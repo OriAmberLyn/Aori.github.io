@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>Interactive Office Scene</title>
     <style>
@@ -13,12 +12,14 @@
             padding: 0;
             font-family: Arial, sans-serif;
         }
+
         #renderCanvas {
             width: 100%;
             height: 100%;
             touch-action: none;
             display: block;
         }
+
         #tooltip {
             position: absolute;
             background: rgba(0,0,0,0.7);
@@ -28,6 +29,7 @@
             pointer-events: none;
             display: none;
             font-size: 14px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -80,11 +82,11 @@
         // Scale all meshes
         result.meshes.forEach(mesh => mesh.scaling = new BABYLON.Vector3(1,1,1));
 
-        // Clickable meshes with Google Sites URLs
+        // Clickable meshes with readable page labels
         const clickableMeshes = {
-            "Monitor_Wide_M_Monitor_Wide_Screen_0": "about.html",
-            "Keyboard_M_Keyboard_0": "contact.html",
-            "1_M_HUION_KAMVAS_GT_221_PRO_0": "works.html"
+            "Monitor_Wide_M_Monitor_Wide_Screen_0": { url: "about.html", label: "About Page" },
+            "Keyboard_M_Keyboard_0": { url: "contact.html", label: "Contact Page" },
+            "1_M_HUION_KAMVAS_GT_221_PRO_0": { url: "works.html", label: "Works Page" }
         };
 
         // Hover and click interactions
@@ -92,15 +94,16 @@
             if(clickableMeshes[mesh.name]) {
                 mesh.actionManager = new BABYLON.ActionManager(scene);
 
-                // Highlight on hover
+                // Highlight on hover + show PAGE NAME
                 mesh.actionManager.registerAction(
                     new BABYLON.ExecuteCodeAction(
                         BABYLON.ActionManager.OnPointerOverTrigger,
                         function() {
                             mesh.originalColor = mesh.material ? mesh.material.diffuseColor.clone() : null;
                             if(mesh.material) mesh.material.diffuseColor = new BABYLON.Color3(1,1,0);
+
                             tooltip.style.display = "block";
-                            tooltip.textContent = mesh.name;
+                            tooltip.textContent = clickableMeshes[mesh.name].label;
                         }
                     )
                 );
@@ -109,13 +112,14 @@
                     new BABYLON.ExecuteCodeAction(
                         BABYLON.ActionManager.OnPointerOutTrigger,
                         function() {
-                            if(mesh.material && mesh.originalColor) mesh.material.diffuseColor = mesh.originalColor;
+                            if(mesh.material && mesh.originalColor)
+                                mesh.material.diffuseColor = mesh.originalColor;
                             tooltip.style.display = "none";
                         }
                     )
                 );
 
-                // Click: zoom camera then navigate on same tab
+                // Click: zoom then navigate
                 mesh.actionManager.registerAction(
                     new BABYLON.ExecuteCodeAction(
                         BABYLON.ActionManager.OnPickTrigger,
@@ -123,7 +127,6 @@
                             const distance = 10;
                             const meshPos = mesh.getBoundingInfo().boundingBox.centerWorld;
 
-                            // Move camera toward mesh
                             const direction = camera.position.subtract(meshPos).normalize();
                             const targetPosition = meshPos.add(direction.scale(distance));
 
@@ -131,31 +134,24 @@
                                 "cameraZoom",
                                 camera,
                                 "position",
-                                60,
-                                60,
+                                60, 60,
                                 camera.position.clone(),
                                 targetPosition,
-                                BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT,
-                                new BABYLON.CubicEase()
+                                BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
                             );
 
-                            // Animate camera target to look at mesh
                             BABYLON.Animation.CreateAndStartAnimation(
                                 "cameraTarget",
                                 camera,
                                 "target",
-                                60,
-                                60,
+                                60, 60,
                                 camera.getTarget().clone(),
                                 meshPos,
-                                BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT,
-                                new BABYLON.CubicEase()
+                                BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
                             );
 
-                            // Navigate after animation
                             setTimeout(() => {
-                                const url = clickableMeshes[mesh.name];
-                                window.location.href = url; // same tab
+                                window.location.href = clickableMeshes[mesh.name].url;
                             }, 700);
                         }
                     )
@@ -163,7 +159,7 @@
             }
         });
 
-        // Tooltip follows mouse
+      // Tooltip follows mouse
         scene.onPointerMove = function(evt) {
             tooltip.style.left = evt.clientX + 10 + "px";
             tooltip.style.top = evt.clientY + 10 + "px";
