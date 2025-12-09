@@ -83,81 +83,88 @@
         result.meshes.forEach(mesh => mesh.scaling = new BABYLON.Vector3(1,1,1));
 
         // Clickable meshes with readable page labels
-        const clickableMeshes = {
-            "Monitor_Wide_M_Monitor_Wide_Screen_0": { url: "about.html", label: "About Page" },
-            "Keyboard_M_Keyboard_0": { url: "contact.html", label: "Contact Page" },
-            "1_M_HUION_KAMVAS_GT_221_PRO_0": { url: "works.html", label: "Works Page" }
-        };
+const clickableMeshes = {
+    "Monitor_Wide_M_Monitor_Wide_Screen_0": { url: "about.html", label: "About Page" },
+    "Keyboard_M_Keyboard_0": { url: "contact.html", label: "Contact Page" },
+    "1_M_HUION_KAMVAS_GT_221_PRO_0": { url: "works.html", label: "Works Page" }
+};
 
-        // Hover and click interactions
-        result.meshes.forEach(mesh => {
-            if(clickableMeshes[mesh.name]) {
-                mesh.actionManager = new BABYLON.ActionManager(scene);
+// Hover and click interactions
+result.meshes.forEach(mesh => {
+    const meshInfo = clickableMeshes[mesh.name];
+    if(meshInfo) {
+        mesh.actionManager = new BABYLON.ActionManager(scene);
 
-                // Highlight on hover + show PAGE NAME
-                mesh.actionManager.registerAction(
-                    new BABYLON.ExecuteCodeAction(
-                        BABYLON.ActionManager.OnPointerOverTrigger,
-                        function() {
-                            mesh.originalColor = mesh.material ? mesh.material.diffuseColor.clone() : null;
-                            if(mesh.material) mesh.material.diffuseColor = new BABYLON.Color3(1,1,0);
+        // Store original material (or create a temporary one if null)
+        const originalMaterial = mesh.material;
+        if(!mesh.material) {
+            mesh.material = new BABYLON.StandardMaterial("tempMat", scene);
+            mesh.material.diffuseColor = new BABYLON.Color3(1,1,1);
+        }
 
-                            tooltip.style.display = "block";
-                            tooltip.textContent = clickableMeshes[mesh.name].label;
-                        }
-                    )
-                );
+        // Highlight on hover + tooltip
+        mesh.actionManager.registerAction(
+            new BABYLON.ExecuteCodeAction(
+                BABYLON.ActionManager.OnPointerOverTrigger,
+                function() {
+                    if(mesh.material) mesh.material.diffuseColor = new BABYLON.Color3(1,1,0);
+                    tooltip.style.display = "block";
+                    tooltip.textContent = meshInfo.label;
+                }
+            )
+        );
 
-                mesh.actionManager.registerAction(
-                    new BABYLON.ExecuteCodeAction(
-                        BABYLON.ActionManager.OnPointerOutTrigger,
-                        function() {
-                            if(mesh.material && mesh.originalColor)
-                                mesh.material.diffuseColor = mesh.originalColor;
-                            tooltip.style.display = "none";
-                        }
-                    )
-                );
+        mesh.actionManager.registerAction(
+            new BABYLON.ExecuteCodeAction(
+                BABYLON.ActionManager.OnPointerOutTrigger,
+                function() {
+                    if(mesh.material && originalMaterial)
+                        mesh.material.diffuseColor = originalMaterial.diffuseColor.clone();
+                    tooltip.style.display = "none";
+                }
+            )
+        );
 
-                // Click: zoom then navigate
-                mesh.actionManager.registerAction(
-                    new BABYLON.ExecuteCodeAction(
-                        BABYLON.ActionManager.OnPickTrigger,
-                        function() {
-                            const distance = 10;
-                            const meshPos = mesh.getBoundingInfo().boundingBox.centerWorld;
+        // Click: zoom then navigate
+        mesh.actionManager.registerAction(
+            new BABYLON.ExecuteCodeAction(
+                BABYLON.ActionManager.OnPickTrigger,
+                function() {
+                    const distance = 10;
+                    const meshPos = mesh.getBoundingInfo().boundingBox.centerWorld;
 
-                            const direction = camera.position.subtract(meshPos).normalize();
-                            const targetPosition = meshPos.add(direction.scale(distance));
+                    const direction = camera.position.subtract(meshPos).normalize();
+                    const targetPosition = meshPos.add(direction.scale(distance));
 
-                            BABYLON.Animation.CreateAndStartAnimation(
-                                "cameraZoom",
-                                camera,
-                                "position",
-                                60, 60,
-                                camera.position.clone(),
-                                targetPosition,
-                                BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
-                            );
+                    BABYLON.Animation.CreateAndStartAnimation(
+                        "cameraZoom",
+                        camera,
+                        "position",
+                        60, 60,
+                        camera.position.clone(),
+                        targetPosition,
+                        BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+                    );
 
-                            BABYLON.Animation.CreateAndStartAnimation(
-                                "cameraTarget",
-                                camera,
-                                "target",
-                                60, 60,
-                                camera.getTarget().clone(),
-                                meshPos,
-                                BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
-                            );
+                    BABYLON.Animation.CreateAndStartAnimation(
+                        "cameraTarget",
+                        camera,
+                        "target",
+                        60, 60,
+                        camera.getTarget().clone(),
+                        meshPos,
+                        BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+                    );
 
-                            setTimeout(() => {
-                                window.location.href = clickableMeshes[mesh.name].url;
-                            }, 700);
-                        }
-                    )
-                );
-            }
-        });
+                    setTimeout(() => {
+                        window.location.href = meshInfo.url;
+                    }, 700);
+                }
+            )
+        );
+    }
+});
+
 
       // Tooltip follows mouse
         scene.onPointerMove = function(evt) {
