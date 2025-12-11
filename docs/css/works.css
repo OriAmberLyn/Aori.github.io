@@ -14,13 +14,13 @@ html, body {
 
 /* ------------------ PROJECT LIST (LEFT SIDEBAR) ------------------ */
 .project-list {
-    width: 250px;             /* fixed width for sidebar */
+    width: 250px;             
     height: 500px;
     overflow-y: scroll;
     background: #181818;
     padding: 10px;
     border-radius: 10px;
-    float: left;              /* sidebar on left */
+    float: left;              
     margin-right: 20px;
 }
 
@@ -61,20 +61,22 @@ html, body {
 
 /* ------------------ EMBED AREA (RIGHT OF SIDEBAR) ------------------ */
 #project-container {
-    float: left;                     /* right of sidebar */
-    width: calc(100% - 290px);       /* remaining space */
+    float: left;                     
+    width: calc(100% - 290px);       
     background: #000;
     border-radius: 10px;
     padding: 10px;
     box-sizing: border-box;
-    min-height: 500px;               /* at least same height as sidebar */
+    min-height: 500px;               
+    max-height: 90vh;                
+    overflow-y: auto;                
 }
 
 /* Each embed inside the container */
 .embed-container {
     position: relative;
     width: 100%;
-    padding-top: 56%; /* default 16:9 aspect ratio */
+    padding-top: 56%; 
     margin-bottom: 20px;
 }
 
@@ -83,17 +85,17 @@ html, body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100% !important;   /* override fixed width/height */
+    width: 100% !important;   
     height: 100% !important;
     border: none;
 }
 
 /* Optional: smaller Scratch embed */
 .embed-container.scratch {
-    padding-top: 48%;  /* slightly shorter for Scratch projects */
+    padding-top: 48%;  
 }
 
-/* ------------------ LINK ------------------ */
+/* ------------------ LINKS ------------------ */
 a {
     display: block;
     clear: both;
