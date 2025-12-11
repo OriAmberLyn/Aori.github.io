@@ -1,4 +1,4 @@
-/* RESET */
+/* ------------------ RESET ------------------ */
 html, body {
     margin: 0;
     padding: 0;
@@ -7,27 +7,24 @@ html, body {
     color: #fff;
 }
 
-/* FILTER BAR */
+/* ------------------ FILTER BAR ------------------ */
 .filter-bar {
     margin: 10px 20px;
 }
 
-/* SCROLLABLE IMAGE PROJECT LIST */
+/* ------------------ PROJECT LIST (LEFT SIDEBAR) ------------------ */
 .project-list {
-    width: 250px;
+    width: 250px;             /* fixed width for sidebar */
     height: 500px;
     overflow-y: scroll;
     background: #181818;
     padding: 10px;
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    float: left;
+    float: left;              /* sidebar on left */
     margin-right: 20px;
 }
 
-/* IMAGE-BASED PROJECT ITEM */
+/* ------------------ IMAGE-BASED PROJECT ITEM ------------------ */
 .project-item {
     display: flex;
     gap: 10px;
@@ -62,34 +59,41 @@ html, body {
     font-size: 0.9em;
 }
 
+/* ------------------ EMBED AREA (RIGHT OF SIDEBAR) ------------------ */
+#project-container {
+    float: left;                     /* right of sidebar */
+    width: calc(100% - 290px);       /* remaining space */
+    background: #000;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    min-height: 500px;               /* at least same height as sidebar */
+}
+
+/* Each embed inside the container */
+.embed-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56%; /* default 16:9 aspect ratio */
+    margin-bottom: 20px;
+}
+
 /* Make all iframes responsive */
 .embed-container iframe {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100% !important;   /* override fixed widths */
-    height: 100% !important;  /* override fixed heights */
+    width: 100% !important;   /* override fixed width/height */
+    height: 100% !important;
     border: none;
 }
 
-/* Optional: smaller Scratch container */
+/* Optional: smaller Scratch embed */
 .embed-container.scratch {
-    padding-top: 48%;  /* adjust for Scratch aspect ratio */
+    padding-top: 48%;  /* slightly shorter for Scratch projects */
 }
 
-/* YouTube & P5.js keep 16:9 */
-.embed-container.youtube,
-.embed-container {
-    padding-top: 56%; /* 16:9 ratio */
-}
-
-
-/* OPTIONAL: For different aspect ratio (Scratch smaller) */
-.embed-container.scratch {
-    padding-top: 48%; /* Slightly shorter for Scratch */
-}
-
-/* LINK */
+/* ------------------ LINK ------------------ */
 a {
     display: block;
     clear: both;
@@ -99,5 +103,8 @@ a {
 }
 
 a:hover {
+    text-decoration: underline;
+}
+
     text-decoration: underline;
 }
