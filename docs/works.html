@@ -9,7 +9,7 @@
 
 <h1>My Works</h1>
 
-<!-- FILTER DROPDOWN -->
+<!-- FILTER -->
 <div class="filter-bar">
     <label for="filter">Sort by:</label>
     <select id="filter" onchange="applyFilter()">
@@ -18,43 +18,50 @@
     </select>
 </div>
 
-<!-- SCROLLABLE PROJECT LIST -->
+<!-- SCROLLABLE IMAGE PROJECT LIST -->
 <div id="project-list" class="project-list">
-    <!-- These items will be sorted automatically -->
+
+    <!-- Example 1 -->
     <div class="project-item" data-date="2025-01-12" onclick="openProject('p5')">
-        <span>P5.js Sketch</span>
-        <span class="date">2025</span>
+        <img src="img/p5thumb.jpg" class="thumb">
+        <div class="info">
+            <strong>P5.js Sketch</strong>
+            <span class="date">2025</span>
+        </div>
     </div>
 
+    <!-- Example 2 -->
     <div class="project-item" data-date="2024-11-02" onclick="openProject('yt')">
-        <span>YouTube Video</span>
-        <span class="date">2024</span>
+        <img src="img/ytthumb.jpg" class="thumb">
+        <div class="info">
+            <strong>YouTube Video</strong>
+            <span class="date">2024</span>
+        </div>
     </div>
 
+    <!-- Example 3 -->
     <div class="project-item" data-date="2024-05-19" onclick="openProject('itch')">
-        <span>Itch.io Game</span>
-        <span class="date">2024</span>
+        <img src="img/itchthumb.jpg" class="thumb">
+        <div class="info">
+            <strong>Itch.io Game</strong>
+            <span class="date">2024</span>
+        </div>
     </div>
 
-    <div class="project-item" data-date="2023-09-01" onclick="openProject('site')">
-        <span>Website Project</span>
-        <span class="date">2023</span>
+    <!-- Example 4 -->
+    <div class="project-item" data-date="2023-08-01" onclick="openProject('site')">
+        <img src="img/sitethumb.jpg" class="thumb">
+        <div class="info">
+            <strong>Website Project</strong>
+            <span class="date">2023</span>
+        </div>
     </div>
 
-    <div class="project-item" data-date="2022-12-22" onclick="openProject('other1')">
-        <span>Project 5</span>
-        <span class="date">2022</span>
-    </div>
-
-    <div class="project-item" data-date="2022-03-05" onclick="openProject('other2')">
-        <span>Project 6</span>
-        <span class="date">2022</span>
-    </div>
 </div>
 
-<!-- DISPLAY AREA -->
+<!-- DISPLAY WINDOW -->
 <div id="project-container" class="embed-container">
-    <p>Select a project from the left.</p>
+    <p>Select a project.</p>
 </div>
 
 <a href="index.html">Back to Scene</a>
