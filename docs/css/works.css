@@ -110,3 +110,31 @@ a:hover {
 
     text-decoration: underline;
 }
+/* Tab buttons */
+.project-tabs {
+    margin-bottom: 10px;
+}
+
+.tab-btn {
+    background: #222;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: #444;
+}
+
+/* Tab content (embeds) */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
