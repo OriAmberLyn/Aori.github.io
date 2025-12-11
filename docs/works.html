@@ -7,17 +7,81 @@
 </head>
 <body>
     <h1>Works</h1>
-    <p>This is the Works page.</p>
+<p>Select a project below:</p>
 
+<div class="project-grid">
+
+    <!-- Project 1 -->
+    <button class="project-btn" data-target="project1">
+        <img src="thumbnail1.png" alt="">
+        <span>p5.js Sketch</span>
+    </button>
+
+    <!-- Project 2 -->
+    <button class="project-btn" data-target="project2">
+        <img src="thumbnail2.png" alt="">
+        <span>YouTube Video</span>
+    </button>
+
+    <!-- Project 3 -->
+    <button class="project-btn" data-target="project3">
+        <img src="thumbnail3.png" alt="">
+        <span>itch.io Game</span>
+    </button>
+
+    <!-- Project 4 -->
+    <button class="project-btn" data-target="project4">
+        <img src="thumbnail4.png" alt="">
+        <span>Project 4</span>
+    </button>
+
+    <!-- Project 5 -->
+    <button class="project-btn" data-target="project5">
+        <img src="thumbnail5.png" alt="">
+        <span>Project 5</span>
+    </button>
+
+    <!-- Project 6 -->
+    <button classüsü="project-btn" data-target="project6">
+        <img src="thumbnail6.png" alt="">
+        <span>Project 6</span>
+    </button>
+
+</div>
+
+<!-- ---------------- CONTENT SECTIONS ---------------- -->
+
+<div class="project-content hidden" id="project1">
     <div class="embed-container">
-         <iframe
-        src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"
-        style="width: 100%; height: 600px; border: none;"
-        allowfullscreen
-    ></iframe>
-        
+        <iframe src="https://editor.p5js.org/Aoriki/full/9ilwBktf0"></iframe>
     </div>
+</div>
 
-    <a href="index.html">Back to Scene</a>
+<div class="project-content hidden" id="project2">
+    <div class="embed-container">
+     <!--   <iframe src="https://www.youtube.com/embed/VIDEO_ID"></iframe> -->
+    </div>
+</div>
+
+<div class="project-content hidden" id="project3">
+    <div class="embed-container">
+       <!-- <iframe src="https://itch.io/embed/yourgame"></iframe> -->
+    </div>
+</div>
+
+<div class="project-content hidden" id="project4">
+   <p>Another project goes here.</p> 
+</div>
+
+<div class="project-content hidden" id="project5">
+    <p>Another project goes here.</p> 
+</div>
+
+<div class="project-content hidden" id="project6">
+    <p>Another project goes here.</p> 
+</div>
+
+<a href="index.html">Back to Scene</a>
+
 </body>
 </html>
