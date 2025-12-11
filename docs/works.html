@@ -21,7 +21,7 @@
 <!-- SCROLLABLE IMAGE PROJECT LIST -->
 <div id="project-list" class="project-list">
 
-    <!-- Project 1: P5.js -->
+    <!-- Project 1: P5.js Sketch -->
     <div class="project-item" data-date="2025-01-12" onclick="openProject('p5')">
         <img src="img/p5thumb.jpg" class="thumb">
         <div class="info">
@@ -30,16 +30,16 @@
         </div>
     </div>
 
-    <!-- Project 2: Scratch + YouTube -->
+    <!-- Project 2: Scratch + YouTube embeds -->
     <div class="project-item" data-date="2024-11-02" onclick="openProject('quieterrs')">
-        <img src="img/ytthumb.jpg" class="thumb">
+        <img src="img/quieterrs-thumb.jpg" class="thumb">
         <div class="info">
-            <strong>Quiet Errs (Scratch + YouTube)</strong>
+            <strong>Quiet Errs (Scratch + Gameplay)</strong>
             <span class="date">2024</span>
         </div>
     </div>
 
-    <!-- Project 3: Itch.io -->
+    <!-- Project 3: Itch.io Game -->
     <div class="project-item" data-date="2024-05-19" onclick="openProject('itch')">
         <img src="img/itchthumb.jpg" class="thumb">
         <div class="info">
@@ -59,86 +59,55 @@
 
 </div>
 
-<!-- EMBED AREA (RIGHT OF SIDEBAR) -->
-<div id="project-container">
+<!-- DISPLAY WINDOW -->
+<div id="project-container" class="embed-container">
     <p>Select a project.</p>
 </div>
 
 <a href="index.html">Back to Scene</a>
 
 <script>
-// ---- OPEN PROJECT ----
+// ---- IFRAME LOADING ----
 function openProject(id) {
     const container = document.getElementById("project-container");
-    container.innerHTML = ''; // clear previous content
 
     if (id === "quieterrs") {
-        // Create tab buttons
-        const tabs = document.createElement('div');
-        tabs.className = 'project-tabs';
-        tabs.innerHTML = `
-            <button class="tab-btn active" onclick="showTab(this, 'scratch')">Scratch</button>
-            <button class="tab-btn" onclick="showTab(this, 'youtube')">YouTube</button>
-        `;
-        container.appendChild(tabs);
+        container.innerHTML = `
+            <!-- SCRATCH EMBED -->
+            <div class="embed-container">
+                <iframe 
+                    src="https://scratch.mit.edu/projects/1101838389/embed"
+                    allowtransparency="true"
+                    frameborder="0"
+                    scrolling="no"
+                    allowfullscreen>
+                </iframe>
+            </div>
 
-        // Scratch iframe
-        const scratchDiv = document.createElement('div');
-        scratchDiv.id = 'scratch';
-        scratchDiv.className = 'embed-container tab-content active';
-        scratchDiv.innerHTML = `
-            <iframe 
-                src="https://scratch.mit.edu/projects/1101838389/embed"
-                allowtransparency="true"
-                frameborder="0"
-                scrolling="no"
-                allowfullscreen>
-            </iframe>
+            <!-- YOUTUBE EMBED -->
+            <div class="embed-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/ogaDnvd_2Ug"
+                    title="(IMA) Final Project : Quiet Errs (gameplay)"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
         `;
-        container.appendChild(scratchDiv);
+        return;
+    }
 
-        // YouTube iframe
-        const youtubeDiv = document.createElement('div');
-        youtubeDiv.id = 'youtube';
-        youtubeDiv.className = 'embed-container tab-content';
-        youtubeDiv.innerHTML = `
-            <iframe 
-                src="https://www.youtube.com/embed/ogaDnvd_2Ug"
-                title="(IMA) Final Project : Quiet Errs (gameplay)"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-            </iframe>
-        `;
-        container.appendChild(youtubeDiv);
-    }
-    else {
-        const embeds = {
-            p5: `<div class="embed-container"><iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe></div>`,
-            itch: `<div class="embed-container"><iframe src="https://itch.io/embed-upload/123456"></iframe></div>`,
-            site: `<div class="embed-container"><iframe src="https://example.com"></iframe></div>`
-        };
-        container.innerHTML = embeds[id] || `<p>Project content not available.</p>`;
-    }
+    const embeds = {
+        p5: `<div class="embed-container"><iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe></div>`,
+        itch: `<div class="embed-container"><iframe src="https://itch.io/embed-upload/123456"></iframe></div>`,
+        site: `<div class="embed-container"><iframe src="https://example.com"></iframe></div>`
+    };
+
+    container.innerHTML = embeds[id] || `<p>Project content not found.</p>`;
 }
 
-// Tab switch function
-function showTab(button, tabId) {
-    const container = document.getElementById("project-container");
-    const tabs = container.getElementsByClassName("tab-btn");
-    const contents = container.getElementsByClassName("tab-content");
-
-    // Remove active from all buttons
-    Array.from(tabs).forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
-
-    // Hide all tab content
-    Array.from(contents).forEach(c => c.classList.remove("active"));
-    // Show selected
-    document.getElementById(tabId).classList.add("active");
-}
-
-// ---- CHRONOLOGICAL FILTER ----
+// ---- CHRONOLOGICAL SORT ----
 function applyFilter() {
     const list = document.getElementById("project-list");
     const items = Array.from(list.getElementsByClassName("project-item"));
@@ -153,10 +122,9 @@ function applyFilter() {
     items.forEach(item => list.appendChild(item));
 }
 
-// Apply filter on page load
+// Run filter on load
 applyFilter();
 </script>
 
 </body>
 </html>
-
