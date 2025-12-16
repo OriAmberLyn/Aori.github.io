@@ -41,10 +41,11 @@ h1 {
     color: #66b3ff;
     font-weight: bold;
     transition: all 0.2s;
-    width: 180px;
+    width: 160px;
     text-align: center;
     box-shadow: 0 0 10px #3399ff33;
     cursor: pointer;
+    position: relative;
 }
 
 .contact-icon img {
@@ -60,27 +61,66 @@ h1 {
     color: #3399ff;
 }
 
-/* EMAIL SPECIFIC BUTTON */
-.email-icon {
-    position: relative;
+/* EMAIL POPUP */
+.email-popup {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #07122b;
+    border: 2px solid #3399ff;
+    border-radius: 10px;
+    padding: 15px;
+    width: 220px;
+    margin-top: 10px;
+    box-shadow: 0 0 15px #3399ff66;
+    z-index: 10;
 }
 
-.send-email-btn {
-    margin-top: 5px;
-    padding: 5px 10px;
-    background: #0b0f1f;
+.email-popup.hidden {
+    display: none;
+}
+
+.email-popup p {
+    font-family: monospace;
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.popup-buttons button {
+    flex: 1;
+    padding: 5px 8px;
     border: 1px solid #3399ff;
     border-radius: 6px;
+    background: #0b0f1f;
     color: #66b3ff;
     font-family: monospace;
     cursor: pointer;
     transition: all 0.2s;
 }
 
-.send-email-btn:hover {
+.popup-buttons button:hover {
     background: #07122b;
     color: #3399ff;
     border-color: #66b3ff;
+}
+
+/* CLOSE BUTTON */
+.close-popup {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: none;
+    background: transparent;
+    color: #3399ff;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 /* FIXED BACK BUTTON */
@@ -106,3 +146,4 @@ a.back-btn:hover {
     color: #3399ff;
     box-shadow: 0 0 15px #3399ff66;
 }
+
