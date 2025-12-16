@@ -18,79 +18,76 @@
     </select>
 </div>
 
-<!-- SCROLLABLE IMAGE PROJECT LIST -->
-<div id="project-list" class="project-list">
+<!-- MAIN LAYOUT -->
+<div class="works-layout">
 
-    <!-- Project 1: P5.js Sketch -->
-    <div class="project-item" data-date="2025-01-12" onclick="openProject('p5')">
-        <img src="img/p5thumb.jpg" class="thumb">
-        <div class="info">
-            <strong>P5.js Sketch</strong>
-            <span class="date">2025</span>
+    <!-- LEFT: PROJECT LIST -->
+    <div id="project-list" class="project-list">
+
+        <div class="project-item" data-date="2025-01-12" onclick="openProject('p5')">
+            <img src="img/p5thumb.jpg" class="thumb">
+            <div class="info">
+                <strong>P5.js Sketch</strong>
+                <span class="date">2025</span>
+            </div>
         </div>
+
+        <div class="project-item" data-date="2024-11-02" onclick="openProject('quieterrs')">
+            <img src="img/quieterrs-thumb.jpg" class="thumb">
+            <div class="info">
+                <strong>Quiet Errs</strong>
+                <span class="date">2024</span>
+            </div>
+        </div>
+
+        <div class="project-item" data-date="2024-05-19" onclick="openProject('itch')">
+            <img src="img/itchthumb.jpg" class="thumb">
+            <div class="info">
+                <strong>Itch.io Game</strong>
+                <span class="date">2024</span>
+            </div>
+        </div>
+
+        <div class="project-item" data-date="2023-08-01" onclick="openProject('site')">
+            <img src="img/sitethumb.jpg" class="thumb">
+            <div class="info">
+                <strong>Website Project</strong>
+                <span class="date">2023</span>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Project 2: Scratch + YouTube embeds -->
-    <div class="project-item" data-date="2024-11-02" onclick="openProject('quieterrs')">
-        <img src="img/quieterrs-thumb.jpg" class="thumb">
-        <div class="info">
-            <strong>Quiet Errs (Scratch + Gameplay)</strong>
-            <span class="date">2024</span>
-        </div>
-    </div>
-
-    <!-- Project 3: Itch.io Game -->
-    <div class="project-item" data-date="2024-05-19" onclick="openProject('itch')">
-        <img src="img/itchthumb.jpg" class="thumb">
-        <div class="info">
-            <strong>Itch.io Game</strong>
-            <span class="date">2024</span>
-        </div>
-    </div>
-
-    <!-- Project 4: Website -->
-    <div class="project-item" data-date="2023-08-01" onclick="openProject('site')">
-        <img src="img/sitethumb.jpg" class="thumb">
-        <div class="info">
-            <strong>Website Project</strong>
-            <span class="date">2023</span>
-        </div>
+    <!-- RIGHT: EMBED DISPLAY -->
+    <div id="project-container">
+        <p>Select a project.</p>
     </div>
 
 </div>
 
-<!-- DISPLAY WINDOW -->
-<div id="project-container" class="embed-container">
-    <p>Select a project.</p>
-</div>
-
-<a href="index.html">Back to Scene</a>
+<a href="index.html">← Back to Scene</a>
 
 <script>
-// ---- IFRAME LOADING ----
+// ---------- LOAD PROJECT ----------
 function openProject(id) {
     const container = document.getElementById("project-container");
 
     if (id === "quieterrs") {
         container.innerHTML = `
-            <!-- SCRATCH EMBED -->
             <div class="embed-container">
                 <iframe 
                     src="https://scratch.mit.edu/projects/1101838389/embed"
                     allowtransparency="true"
-                    frameborder="0"
                     scrolling="no"
                     allowfullscreen>
                 </iframe>
             </div>
 
-            <!-- YOUTUBE EMBED -->
             <div class="embed-container">
                 <iframe 
                     src="https://www.youtube.com/embed/ogaDnvd_2Ug"
-                    title="(IMA) Final Project : Quiet Errs (gameplay)"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    title="Quiet Errs Gameplay"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
                 </iframe>
             </div>
@@ -99,30 +96,41 @@ function openProject(id) {
     }
 
     const embeds = {
-        p5: `<div class="embed-container"><iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe></div>`,
-        itch: `<div class="embed-container"><iframe src="https://itch.io/embed-upload/123456"></iframe></div>`,
-        site: `<div class="embed-container"><iframe src="https://example.com"></iframe></div>`
+        p5: `
+            <div class="embed-container">
+                <iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe>
+            </div>
+        `,
+        itch: `
+            <div class="embed-container">
+                <iframe src="https://itch.io/embed-upload/123456"></iframe>
+            </div>
+        `,
+        site: `
+            <div class="embed-container">
+                <iframe src="https://example.com"></iframe>
+            </div>
+        `
     };
 
-    container.innerHTML = embeds[id] || `<p>Project content not found.</p>`;
+    container.innerHTML = embeds[id] || "<p>Project not found.</p>";
 }
 
-// ---- CHRONOLOGICAL SORT ----
+// ---------- SORT PROJECTS ----------
 function applyFilter() {
     const list = document.getElementById("project-list");
     const items = Array.from(list.getElementsByClassName("project-item"));
-    const filter = document.getElementById("filter").value;
+    const order = document.getElementById("filter").value;
 
     items.sort((a, b) => {
         const dateA = new Date(a.dataset.date);
         const dateB = new Date(b.dataset.date);
-        return filter === "newest" ? dateB - dateA : dateA - dateB;
+        return order === "newest" ? dateB - dateA : dateA - dateB;
     });
 
     items.forEach(item => list.appendChild(item));
 }
 
-// Run filter on load
 applyFilter();
 </script>
 
