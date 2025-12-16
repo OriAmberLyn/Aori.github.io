@@ -1,124 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Works</title>
-<link rel="stylesheet" href="works.css">
+    <meta charset="UTF-8" />
+    <title>Works</title>
+    <link rel="stylesheet" href="css/works.css" />
 </head>
-
 <body>
 
-<div class="window">
+<h1>My Works</h1>
 
-    <!-- TOP TABS -->
-    <div class="top-tabs">
-        <button class="tab active" onclick="switchTab('interactive')">INTERACTIVE</button>
-        <button class="tab" onclick="switchTab('static')">STATIC</button>
+<!-- TOP TABS -->
+<div class="top-tabs">
+    <button class="tab-btn active" onclick="switchTab('interactive')">Interactive</button>
+    <button class="tab-btn" onclick="switchTab('static')">Static</button>
+</div>
+
+<!-- INTERACTIVE TAB CONTENT -->
+<div id="interactive" class="tab-content active">
+
+    <!-- FILTER -->
+    <div class="filter-bar">
+        <label for="filter">Sort by:</label>
+        <select id="filter" onchange="applyFilter()">
+            <option value="newest">Newest → Oldest</option>
+            <option value="oldest">Oldest → Newest</option>
+        </select>
     </div>
 
-    <div class="content">
+    <!-- MAIN LAYOUT -->
+    <div class="works-layout">
 
-        <!-- LEFT PROJECT LIST -->
-        <div class="sidebar">
-            <div class="filter">
-                <button onclick="sortProjects('new')">Newest</button>
-                <button onclick="sortProjects('old')">Oldest</button>
-            </div>
+        <!-- LEFT: PROJECT LIST -->
+        <div id="project-list" class="project-list">
 
-            <div class="project-grid" id="projectGrid">
-
-                <!-- PROJECT BUTTON -->
-                <button class="project-btn"
-                        data-date="2025-01-01"
-                        onclick="openProject('proj1')">
-                    <img src="thumbnails/project1.jpg">
-                    <span>Quiet Errs</span>
-                </button>
-
-                <button class="project-btn"
-                        data-date="2024-10-01"
-                        onclick="openProject('proj2')">
-                    <img src="thumbnails/project2.jpg">
-                    <span>Scratch Game</span>
-                </button>
-
-            </div>
-        </div>
-
-        <!-- RIGHT DISPLAY -->
-        <div class="viewer">
-
-            <!-- PROJECT 1 -->
-            <div id="proj1" class="project-content">
-                <div class="embed">
-                    <iframe
-                        src="https://scratch.mit.edu/projects/1101838389/embed"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-
-                <div class="embed">
-                    <iframe
-                        src="https://www.youtube.com/embed/ogaDnvd_2Ug"
-                        allowfullscreen>
-                    </iframe>
+            <div class="project-item" data-date="2025-01-12" onclick="openProject('p5')">
+                <img src="img/p5thumb.jpg" class="thumb">
+                <div class="info">
+                    <strong>P5.js Sketch</strong>
+                    <span class="date">2025</span>
                 </div>
             </div>
 
-            <!-- PROJECT 2 -->
-            <div id="proj2" class="project-content hidden">
-                <div class="embed">
-                    <iframe
-                        src="https://editor.p5js.org/Aoriki/full/9ilwBktf0">
-                    </iframe>
+            <div class="project-item" data-date="2024-11-02" onclick="openProject('quieterrs')">
+                <img src="img/quieterrs-thumb.jpg" class="thumb">
+                <div class="info">
+                    <strong>Quiet Errs</strong>
+                    <span class="date">2024</span>
                 </div>
             </div>
 
-            <!-- STATIC TAB -->
-            <div id="static" class="project-content hidden">
-                <div class="gallery">
-                    <img src="thumbnails/project1.jpg">
-                    <img src="thumbnails/project2.jpg">
+            <div class="project-item" data-date="2024-05-19" onclick="openProject('itch')">
+                <img src="img/itchthumb.jpg" class="thumb">
+                <div class="info">
+                    <strong>Itch.io Game</strong>
+                    <span class="date">2024</span>
+                </div>
+            </div>
+
+            <div class="project-item" data-date="2023-08-01" onclick="openProject('site')">
+                <img src="img/sitethumb.jpg" class="thumb">
+                <div class="info">
+                    <strong>Website Project</strong>
+                    <span class="date">2023</span>
                 </div>
             </div>
 
         </div>
+
+        <!-- RIGHT: EMBED DISPLAY -->
+        <div id="project-container">
+            <p>Select a project.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- STATIC TAB CONTENT -->
+<div id="static" class="tab-content">
+    <div class="static-gallery">
+
+        <div class="gallery-item">
+            <img src="img/static1.jpg" alt="Static 1">
+        </div>
+
+        <div class="gallery-item">
+            <img src="img/static2.jpg" alt="Static 2">
+        </div>
+
+        <div class="gallery-item">
+            <video controls>
+                <source src="video/animation1.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Add more images/videos as needed -->
     </div>
 </div>
 
+<a href="index.html">← Back to Scene</a>
+
 <script>
-function switchTab(tab) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
+// ----- TAB SWITCHING -----
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.getElementById(tabId).classList.add('active');
 
-    document.querySelectorAll('.project-content').forEach(c => c.classList.add('hidden'));
-
-    if (tab === 'interactive') {
-        document.getElementById('proj1').classList.remove('hidden');
-    } else {
-        document.getElementById('static').classList.remove('hidden');
-    }
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`.tab-btn[onclick="switchTab('${tabId}')"]`).classList.add('active');
 }
 
+// ----- EXISTING FUNCTIONS -----
 function openProject(id) {
-    document.querySelectorAll('.project-content').forEach(c => c.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
+    const container = document.getElementById("project-container");
+
+    if (id === "quieterrs") {
+        container.innerHTML = `
+            <div class="embed-container">
+                <iframe src="https://scratch.mit.edu/projects/1101838389/embed"
+                    allowtransparency="true" scrolling="no" allowfullscreen></iframe>
+            </div>
+            <div class="embed-container">
+                <iframe src="https://www.youtube.com/embed/ogaDnvd_2Ug"
+                    title="Quiet Errs Gameplay" allowfullscreen></iframe>
+            </div>
+        `;
+        return;
+    }
+
+    const embeds = {
+        p5: `<div class="embed-container"><iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe></div>`,
+        itch: `<div class="embed-container"><iframe src="https://itch.io/embed-upload/123456"></iframe></div>`,
+        site: `<div class="embed-container"><iframe src="https://example.com"></iframe></div>`
+    };
+
+    container.innerHTML = embeds[id] || "<p>Project not found.</p>";
 }
 
-function sortProjects(order) {
-    const grid = document.getElementById('projectGrid');
-    const items = [...grid.children];
+function applyFilter() {
+    const list = document.getElementById("project-list");
+    const items = Array.from(list.getElementsByClassName("project-item"));
+    const order = document.getElementById("filter").value;
 
     items.sort((a, b) => {
-        return order === 'new'
-            ? new Date(b.dataset.date) - new Date(a.dataset.date)
-            : new Date(a.dataset.date) - new Date(b.dataset.date);
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+        return order === "newest" ? dateB - dateA : dateA - dateB;
     });
 
-    items.forEach(i => grid.appendChild(i));
+    items.forEach(item => list.appendChild(item));
 }
+
+applyFilter();
 </script>
 
 </body>
 </html>
-
