@@ -20,10 +20,19 @@
         </a>
 
         <!-- Email -->
-        <div class="contact-icon email-icon" onclick="copyEmail()">
+        <div class="contact-icon email-icon" onclick="toggleEmailPopup()">
             <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/gmail.svg" alt="Email">
-            <span id="email-text">aoriki.contact@gmail.com</span>
-            <button class="send-email-btn" onclick="openEmail(event)">Send Email</button>
+            <span>Email Me</span>
+
+            <!-- POPUP -->
+            <div id="email-popup" class="email-popup hidden">
+                <p id="email-text">aoriki.contact@gmail.com</p>
+                <div class="popup-buttons">
+                    <button onclick="copyEmail()">Copy Email</button>
+                    <button onclick="openEmail()">Send Email</button>
+                </div>
+                <button class="close-popup" onclick="toggleEmailPopup()">✕</button>
+            </div>
         </div>
 
     </div>
@@ -33,15 +42,19 @@
 </div>
 
 <script>
+function toggleEmailPopup() {
+    const popup = document.getElementById("email-popup");
+    popup.classList.toggle("hidden");
+}
+
 function copyEmail() {
     const email = document.getElementById("email-text").innerText;
     navigator.clipboard.writeText(email).then(() => {
-        alert("Email copied to clipboard: " + email);
+        alert("Email copied: " + email);
     });
 }
 
-function openEmail(event) {
-    event.stopPropagation(); // prevent triggering copy
+function openEmail() {
     const email = document.getElementById("email-text").innerText;
     window.location.href = `mailto:${email}`;
 }
@@ -49,3 +62,4 @@ function openEmail(event) {
 
 </body>
 </html>
+
