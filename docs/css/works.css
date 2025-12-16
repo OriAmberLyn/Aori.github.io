@@ -1,128 +1,137 @@
-/* =========================
-   GLOBAL RESET
-   ========================= */
-* {
-    box-sizing: border-box;
+/* RESET */
+html, body {
     margin: 0;
     padding: 0;
-    font-family: "Courier New", monospace;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: radial-gradient(circle at top, #0a1424, #050a14);
+    color: #cfe6ff;
 }
 
-/* =========================
-   PAGE BASE
-   ========================= */
-body {
-    background: #050c1a;
-    color: #b7ddff;
-    padding: 20px;
+/* HEADER */
+h1 {
+    margin: 20px;
+    color: #7cc7ff;
+    text-shadow: 0 0 6px rgba(124, 199, 255, 0.3);
 }
 
-/* =========================
-   WINDOW FRAME
-   ========================= */
-.works-window {
-    border: 2px solid #2a7fff;
-    background: #08162d;
-    box-shadow: 0 0 20px rgba(42,127,255,0.25);
+/* FILTER */
+.filter-bar {
+    margin: 0 20px 20px;
 }
 
-/* =========================
-   TOP TABS (FILE FOLDER STYLE)
-   ========================= */
-.tabs {
+.filter-bar select {
+    background: #0b1b33;
+    color: #7cc7ff;
+    border: 1px solid #1f3b66;
+    padding: 4px 6px;
+}
+
+/* MAIN FLEX LAYOUT */
+.works-layout {
     display: flex;
-    align-items: flex-end;
-    border-bottom: 2px solid #2a7fff;
-    padding-left: 6px;
+    gap: 20px;
+    padding: 0 20px;
+    align-items: flex-start;
 }
 
-.tab {
-    background: #0b234a;
-    color: #b7ddff;
-    border: 2px solid #2a7fff;
-    border-bottom: none;
-    padding: 10px 22px;
-    margin-right: 6px;
-    cursor: pointer;
-    position: relative;
-    top: 2px;
-    transition: background 0.2s, color 0.2s;
-}
-
-.tab:hover {
-    background: #123a7a;
-}
-
-/* ACTIVE TAB = CONNECTED TO PANEL */
-.tab.active {
-    background: #08162d;
-    color: #ffffff;
-    border-bottom: 2px solid #08162d; /* hides line = folder effect */
-    z-index: 2;
-}
-
-/* =========================
-   MAIN CONTENT AREA
-   ========================= */
-.main {
-    display: flex;
-    height: 65vh;
-}
-
-/* =========================
-   PROJECT LIST (LEFT PANEL)
-   ========================= */
+/* LEFT SIDEBAR */
 .project-list {
     width: 260px;
-    background: #071c38;
-    border-right: 2px solid #2a7fff;
+    max-height: 70vh;
     overflow-y: auto;
+    background: linear-gradient(180deg, #0b1b33, #050d1d);
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #1f3b66;
+    box-shadow: 0 0 15px rgba(64, 140, 255, 0.15);
 }
 
-/* scrollbar styling */
-.project-list::-webkit-scrollbar {
-    width: 8px;
-}
-.project-list::-webkit-scrollbar-thumb {
-    background: #2a7fff;
-}
-
-/* individual items */
+/* PROJECT ITEM */
 .project-item {
-    padding: 14px 12px;
-    border-bottom: 1px solid rgba(42,127,255,0.4);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    background: linear-gradient(135deg, #10254a, #0b1b33);
+    border-radius: 10px;
     cursor: pointer;
-    transition: background 0.15s;
+    transition: 0.2s;
+    margin-bottom: 10px;
+    border: 1px solid #1f3b66;
 }
 
 .project-item:hover {
-    background: rgba(42,127,255,0.25);
+    background: linear-gradient(135deg, #143060, #10254a);
+    box-shadow: 0 0 10px rgba(124, 199, 255, 0.25);
 }
 
-/* =========================
-   EMBED PANEL (RIGHT)
-   ========================= */
-.embed-container {
+/* THUMBNAIL */
+.thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #2d5fa3;
+}
+
+/* INFO TEXT */
+.info strong {
+    color: #9ad5ff;
+}
+
+.date {
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+
+/* RIGHT CONTENT */
+#project-container {
     flex: 1;
-    background: #040d1f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+
+/* RESPONSIVE EMBEDS */
+.embed-container {
     position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    margin-bottom: 20px;
+    background: radial-gradient(circle at center, #0b1b33, #020814);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #1f3b66;
+    box-shadow: inset 0 0 20px rgba(124, 199, 255, 0.08),
+                0 0 20px rgba(64, 140, 255, 0.15);
 }
 
-/* iframe sizing */
 .embed-container iframe {
-    width: 92%;
-    height: 92%;
-    border: 2px solid #2a7fff;
-    background: black;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
-/* =========================
-   UTILITY
-   ========================= */
-.hidden {
-    display: none;
+/* LINKS */
+a {
+    display: block;
+    margin: 20px;
+    color: #7cc7ff;
+    text-decoration: none;
 }
 
+a:hover {
+    color: #b5e5ff;
+    text-shadow: 0 0 6px rgba(124, 199, 255, 0.4);
+}
+
+/* SCROLLBAR (WebKit) */
+.project-list::-webkit-scrollbar {
+    width: 6px;
+}
+.project-list::-webkit-scrollbar-thumb {
+    background: #2d5fa3;
+    border-radius: 10px;
+}
+.project-list::-webkit-scrollbar-track {
+    background: #050d1d;
+}
