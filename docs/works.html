@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Works</title>
-<link rel="stylesheet" href="works.css" />
+    <meta charset="UTF-8">
+    <title>Works</title>
+    <link rel="stylesheet" href="works.css">
 </head>
 
 <body>
 
-<h1 class="title">MY WORKS</h1>
+<h1>My Works</h1>
 
-<div class="workspace">
+<div class="works-window">
 
     <!-- TABS -->
     <div class="tabs">
@@ -18,78 +18,62 @@
         <button class="tab" onclick="switchTab('static', this)">Static</button>
     </div>
 
-    <!-- CONTENT AREA -->
-    <div class="content">
+    <!-- MAIN CONTENT -->
+    <div class="main">
 
-        <!-- LEFT: PROJECT LIST -->
+        <!-- LEFT LIST -->
         <div class="project-list" id="interactive">
-            <div class="project-item" onclick="openProject('scratch')">
-                <span>Scratch Game</span>
-                <span class="year">2024</span>
-            </div>
-
-            <div class="project-item" onclick="openProject('yt')">
-                <span>YouTube Gameplay</span>
-                <span class="year">2024</span>
-            </div>
+            <div class="project-item" onclick="openProject('scratch')">Scratch Game (2024)</div>
+            <div class="project-item" onclick="openProject('yt')">YouTube Gameplay (2024)</div>
         </div>
 
         <div class="project-list hidden" id="static">
-            <div class="project-item" onclick="openProject('image')">
-                <span>Image Project</span>
-                <span class="year">2023</span>
-            </div>
+            <div class="project-item">Static Images (2023)</div>
         </div>
 
-        <!-- RIGHT: EMBED PANEL -->
-        <div id="project-container" class="embed-container">
-            <p class="placeholder">Select a project</p>
+        <!-- RIGHT EMBED -->
+        <div class="embed-container" id="project-container">
+            Select a project
         </div>
 
     </div>
 </div>
 
 <script>
-function switchTab(tabId, btn) {
-    document.querySelectorAll('.project-list').forEach(p => p.classList.add('hidden'));
-    document.getElementById(tabId).classList.remove('hidden');
+function switchTab(id, btn) {
+    document.querySelectorAll('.project-list').forEach(l => l.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
 
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
+
+    document.getElementById('project-container').innerHTML = 'Select a project';
 }
 
 function openProject(type) {
-    const container = document.getElementById("project-container");
+    const c = document.getElementById('project-container');
 
-    const embeds = {
-        scratch: `
-        <iframe 
+    if (type === 'scratch') {
+        c.innerHTML = `
+        <iframe
             src="https://scratch.mit.edu/projects/1101838389/embed"
             allowtransparency="true"
             frameborder="0"
             scrolling="no"
             allowfullscreen>
-        </iframe>`,
+        </iframe>`;
+    }
 
-        yt: `
-        <iframe 
+    if (type === 'yt') {
+        c.innerHTML = `
+        <iframe
             src="https://www.youtube.com/embed/ogaDnvd_2Ug"
-            title="YouTube video"
             frameborder="0"
             allowfullscreen>
-        </iframe>`,
-
-        image: `<p style="color:#7fdcff">Static image gallery goes here</p>`
-    };
-
-    container.innerHTML = embeds[type];
+        </iframe>`;
+    }
 }
 </script>
-
-</body>
-</html>
-
-
 
 </body>
 </html>
