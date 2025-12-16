@@ -3,14 +3,14 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Arial, monospace;
-    background: #0a0f1a; /* dark bluish background */
-    color: #c0d6f0; /* light tech-blue text */
+    background: #0d0f1a;
+    color: #c0e0ff;
 }
 
 /* HEADER */
 h1 {
     margin: 20px;
-    color: #7ac1ff;
+    color: #7ed0ff;
 }
 
 /* TOP TABS */
@@ -20,10 +20,10 @@ h1 {
 }
 
 .tab-btn {
-    background: #0a0f1a;
-    border: 2px solid #1b3b7a; /* dark blue border */
+    background: #0d0f1a;
+    border: 2px solid #1a3c6f;
     border-bottom: none;
-    color: #5ac8ff; /* tech blue text */
+    color: #7ed0ff;
     padding: 10px 20px;
     cursor: pointer;
     font-family: monospace;
@@ -35,10 +35,10 @@ h1 {
 }
 
 .tab-btn.active {
-    background: #05122e; /* active darker blue */
-    border-color: #5ac8ff;
-    color: #5ac8ff;
-    border-bottom: 2px solid #05122e;
+    background: #07122b;
+    border-color: #4ab0ff;
+    color: #4ab0ff;
+    border-bottom: 2px solid #07122b;
 }
 
 .tab-content {
@@ -52,15 +52,6 @@ h1 {
 /* FILTER BAR */
 .filter-bar {
     margin: 0 20px 20px 20px;
-    color: #c0d6f0;
-}
-
-.filter-bar select {
-    background: #05122e;
-    color: #5ac8ff;
-    border: 1px solid #1b3b7a;
-    padding: 5px 10px;
-    border-radius: 5px;
 }
 
 /* MAIN FLEX LAYOUT */
@@ -76,7 +67,7 @@ h1 {
     width: 260px;
     max-height: 70vh;
     overflow-y: auto;
-    background: #05122e;
+    background: #07122b;
     padding: 10px;
     border-radius: 10px;
     flex-shrink: 0;
@@ -88,7 +79,7 @@ h1 {
     gap: 10px;
     align-items: center;
     padding: 10px;
-    background: #0a1b3d;
+    background: #0a1b3b;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.2s, box-shadow 0.2s;
@@ -96,8 +87,8 @@ h1 {
 }
 
 .project-item:hover {
-    background: #0d2a61;
-    box-shadow: 0 0 10px #5ac8ff;
+    background: #0f2a60;
+    box-shadow: 0 0 10px #4ab0ff;
 }
 
 .thumb {
@@ -105,7 +96,7 @@ h1 {
     height: 60px;
     object-fit: cover;
     border-radius: 6px;
-    border: 1px solid #5ac8ff;
+    border: 1px solid #4ab0ff;
 }
 
 .info {
@@ -115,8 +106,7 @@ h1 {
 
 .date {
     font-size: 0.85em;
-    opacity: 0.8;
-    color: #a0cfff;
+    opacity: 0.7;
 }
 
 /* RIGHT CONTENT AREA */
@@ -128,11 +118,12 @@ h1 {
 .embed-container {
     position: relative;
     width: 100%;
-    padding-top: 56.25%; /* 16:9 */
+    padding-top: 56.25%;
     margin-bottom: 20px;
-    background: #05122e;
+    background: #07122b;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 0 10px #4ab0ff33;
 }
 
 .embed-container iframe {
@@ -155,42 +146,37 @@ h1 {
 .gallery-item video {
     width: 100%;
     border-radius: 10px;
-    border: 2px solid #5ac8ff;
-    background: #05122e;
-    box-shadow: 0 0 10px #5ac8ff55;
+    border: 2px solid #4ab0ff;
+    background: #07122b;
+    box-shadow: 0 0 10px #4ab0ff33;
 }
 
 /* LINKS */
 a {
     display: block;
     margin: 20px;
-    color: #7ac1ff;
+    color: #7ed0ff;
     text-decoration: none;
 }
 
 a:hover {
-    color: #a0d4ff;
+    color: #4ab0ff;
 }
 
-/* HOVER GLOW EFFECT */
-.project-item:hover, .tab-btn:hover {
-    box-shadow: 0 0 15px #5ac8ff;
-}
-
-.gallery-item img:hover, .gallery-item video:hover {
-    box-shadow: 0 0 20px #5ac8ff;
-}
-
-/* OPTIONAL SCROLLBAR STYLE FOR SIDEBAR */
+/* SCROLLBAR STYLE */
 .project-list::-webkit-scrollbar {
     width: 8px;
 }
 
 .project-list::-webkit-scrollbar-track {
-    background: #05122e;
+    background: #07122b;
 }
 
 .project-list::-webkit-scrollbar-thumb {
+    background: #4ab0ff;
+    border-radius: 4px;
+}
+webkit-scrollbar-thumb {
     background: #5ac8ff;
     border-radius: 4px;
 }
