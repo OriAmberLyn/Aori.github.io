@@ -2,128 +2,100 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Works Archive</title>
+<title>Works</title>
 <link rel="stylesheet" href="css/works.css">
 </head>
 <body>
 
-<h1>ARCHIVE://WORKS</h1>
+<h1 class="title">WORKS_ARCHIVE</h1>
 
-<!-- TOP FOLDER TABS -->
-<div class="folder-tabs">
-    <button class="folder-tab active" onclick="switchFolder('interactive')">
-        INTERACTIVE
-    </button>
-    <button class="folder-tab" onclick="switchFolder('static')">
-        STATIC
-    </button>
+<!-- TOP FILE TABS -->
+<div class="tabs">
+    <button class="tab active" onclick="openTab('interactive')">INTERACTIVE</button>
+    <button class="tab" onclick="openTab('static')">STATIC</button>
 </div>
 
-<!-- INTERACTIVE FOLDER -->
-<section id="interactive" class="folder-content active">
+<!-- FILE WINDOW -->
+<div class="window">
 
-    <div class="works-layout">
+    <!-- INTERACTIVE TAB -->
+    <div id="interactive" class="tab-content active">
 
-        <!-- LEFT PROJECT LIST -->
-        <div id="project-list" class="project-list">
+        <div class="works-layout">
 
-            <div class="project-item" data-date="2025-01-12" onclick="openProject('p5')">
-                <img src="img/p5thumb.jpg" class="thumb">
-                <div class="info">
-                    <strong>P5.JS</strong>
-                    <span class="date">2025</span>
+            <!-- LEFT PROJECT LIST -->
+            <div class="project-list">
+                <div class="project-item" onclick="openProject('quieterrs')">
+                    <img src="img/quieterrs-thumb.jpg">
+                    <span>Quiet Errs</span>
+                </div>
+
+                <div class="project-item" onclick="openProject('p5')">
+                    <img src="img/p5thumb.jpg">
+                    <span>P5 Sketch</span>
                 </div>
             </div>
 
-            <div class="project-item" data-date="2024-11-02" onclick="openProject('quieterrs')">
-                <img src="img/quieterrs-thumb.jpg" class="thumb">
-                <div class="info">
-                    <strong>QUIET ERRS</strong>
-                    <span class="date">2024</span>
-                </div>
-            </div>
-
-            <div class="project-item" data-date="2024-05-19" onclick="openProject('itch')">
-                <img src="img/itchthumb.jpg" class="thumb">
-                <div class="info">
-                    <strong>ITCH.IO</strong>
-                    <span class="date">2024</span>
-                </div>
+            <!-- RIGHT EMBED AREA -->
+            <div id="project-container">
+                <p class="hint">Select a project…</p>
             </div>
 
         </div>
-
-        <!-- RIGHT EMBED WINDOW -->
-        <div id="project-container" class="terminal-window">
-            <p>SELECT PROJECT_</p>
-        </div>
-
     </div>
 
-</section>
+    <!-- STATIC TAB -->
+    <div id="static" class="tab-content">
 
-<!-- STATIC FOLDER -->
-<section id="static" class="folder-content">
-
-    <div class="gallery">
-
-        <div class="gallery-item">
+        <div class="gallery">
             <img src="img/static1.jpg">
-        </div>
-
-        <div class="gallery-item">
             <img src="img/static2.jpg">
-        </div>
 
-        <div class="gallery-item">
-            <video src="video/loop.mp4" autoplay muted loop></video>
-        </div>
-
-        <div class="gallery-item">
-            <img src="img/static3.jpg">
+            <video src="video/anim1.mp4" autoplay muted loop></video>
+            <video src="video/anim2.mp4" autoplay muted loop></video>
         </div>
 
     </div>
 
-</section>
+</div>
 
-<a href="index.html" class="back-link">← BACK</a>
+<a href="index.html" class="back">← Back</a>
 
 <script>
-/* SWITCH FOLDER TABS */
-function switchFolder(id) {
-    document.querySelectorAll('.folder-content').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.folder-tab').forEach(t => t.classList.remove('active'));
+/* ---------- TAB SWITCH ---------- */
+function openTab(id) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
+    document.querySelector(`[onclick="openTab('${id}')"]`).classList.add('active');
     document.getElementById(id).classList.add('active');
-    event.target.classList.add('active');
 }
 
-/* LOAD PROJECT EMBEDS */
+/* ---------- PROJECT LOADER ---------- */
 function openProject(id) {
     const c = document.getElementById("project-container");
 
     if (id === "quieterrs") {
         c.innerHTML = `
-            <div class="embed-container">
-                <iframe src="https://scratch.mit.edu/projects/1101838389/embed"></iframe>
+            <div class="embed">
+                <iframe src="https://scratch.mit.edu/projects/1101838389/embed"
+                        allowfullscreen></iframe>
             </div>
-            <div class="embed-container">
-                <iframe src="https://www.youtube.com/embed/ogaDnvd_2Ug"></iframe>
-            </div>
-        `;
+            <div class="embed">
+                <iframe src="https://www.youtube.com/embed/ogaDnvd_2Ug"
+                        allowfullscreen></iframe>
+            </div>`;
         return;
     }
 
-    const embeds = {
-        p5: `<div class="embed-container"><iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe></div>`,
-        itch: `<div class="embed-container"><iframe src="https://itch.io/embed-upload/123456"></iframe></div>`
-    };
-
-    c.innerHTML = embeds[id] || `<p>NO DATA</p>`;
+    if (id === "p5") {
+        c.innerHTML = `
+            <div class="embed">
+                <iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe>
+            </div>`;
+    }
 }
 </script>
 
 </body>
 </html>
-
