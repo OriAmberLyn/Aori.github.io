@@ -1,4 +1,4 @@
-/* RESET */
+/* RESET & PAGE WRAPPER */
 html, body {
     margin: 0;
     padding: 0;
@@ -7,11 +7,10 @@ html, body {
     color: #a0d6ff;
 }
 
-/* PAGE WRAPPER */
 .page-wrapper {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 40px 20px 80px 20px; /* extra bottom padding for fixed button */
+    padding: 40px 20px 80px 20px;
 }
 
 /* HEADER */
@@ -42,9 +41,10 @@ h1 {
     color: #66b3ff;
     font-weight: bold;
     transition: all 0.2s;
-    width: 140px;
+    width: 180px;
     text-align: center;
     box-shadow: 0 0 10px #3399ff33;
+    cursor: pointer;
 }
 
 .contact-icon img {
@@ -60,7 +60,30 @@ h1 {
     color: #3399ff;
 }
 
-/* FIXED BACK BUTTON - BOTTOM LEFT */
+/* EMAIL SPECIFIC BUTTON */
+.email-icon {
+    position: relative;
+}
+
+.send-email-btn {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background: #0b0f1f;
+    border: 1px solid #3399ff;
+    border-radius: 6px;
+    color: #66b3ff;
+    font-family: monospace;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.send-email-btn:hover {
+    background: #07122b;
+    color: #3399ff;
+    border-color: #66b3ff;
+}
+
+/* FIXED BACK BUTTON */
 a.back-btn {
     position: fixed;
     bottom: 20px;
@@ -83,4 +106,3 @@ a.back-btn:hover {
     color: #3399ff;
     box-shadow: 0 0 15px #3399ff66;
 }
-
