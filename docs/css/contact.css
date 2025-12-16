@@ -17,14 +17,15 @@ html, body {
 h1 {
     margin-bottom: 40px;
     color: #66b3ff;
+    text-align: center; /* center page title */
 }
 
-/* CONTACT CONTAINER */
+/* CONTACT CONTAINER - CENTERED */
 .contact-container {
     display: flex;
     gap: 40px;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: center; /* center icons horizontally */
 }
 
 /* CONTACT ICONS */
@@ -71,6 +72,7 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    align-items: center; /* center email buttons inside icon */
 }
 
 #email-content button {
