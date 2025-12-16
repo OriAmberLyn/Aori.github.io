@@ -19,19 +19,16 @@
             <span>Instagram</span>
         </a>
 
-        <!-- Email -->
-        <div class="contact-icon email-icon" onclick="toggleEmailPopup()">
+        <!-- Email (collapsible) -->
+        <div class="contact-icon" onclick="toggleEmail()">
             <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/gmail.svg" alt="Email">
             <span>Email Me</span>
 
-            <!-- POPUP -->
-            <div id="email-popup" class="email-popup hidden">
+            <!-- Hidden email content -->
+            <div id="email-content" class="hidden">
                 <p id="email-text">aoriki.contact@gmail.com</p>
-                <div class="popup-buttons">
-                    <button onclick="copyEmail()">Copy Email</button>
-                    <button onclick="openEmail()">Send Email</button>
-                </div>
-                <button class="close-popup" onclick="toggleEmailPopup()">✕</button>
+                <button onclick="copyEmail(event)">Copy Email</button>
+                <button onclick="openEmail(event)">Send Email</button>
             </div>
         </div>
 
@@ -42,19 +39,24 @@
 </div>
 
 <script>
-function toggleEmailPopup() {
-    const popup = document.getElementById("email-popup");
-    popup.classList.toggle("hidden");
+// Toggle email content visibility
+function toggleEmail() {
+    const content = document.getElementById("email-content");
+    content.classList.toggle("hidden");
 }
 
-function copyEmail() {
+// Copy email to clipboard
+function copyEmail(event) {
+    event.stopPropagation(); // prevent toggling
     const email = document.getElementById("email-text").innerText;
     navigator.clipboard.writeText(email).then(() => {
         alert("Email copied: " + email);
     });
 }
 
-function openEmail() {
+// Open email client
+function openEmail(event) {
+    event.stopPropagation(); // prevent toggling
     const email = document.getElementById("email-text").innerText;
     window.location.href = `mailto:${email}`;
 }
@@ -62,4 +64,3 @@ function openEmail() {
 
 </body>
 </html>
-
