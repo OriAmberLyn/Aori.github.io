@@ -1,78 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Works</title>
-    <link rel="stylesheet" href="works.css">
+    <link rel="stylesheet" href="css/works.css" />
 </head>
-
 <body>
 
 <h1>My Works</h1>
 
-<div class="works-window">
-
-    <!-- TABS -->
-    <div class="tabs">
-        <button class="tab active" onclick="switchTab('interactive', this)">Interactive</button>
-        <button class="tab" onclick="switchTab('static', this)">Static</button>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="main">
-
-        <!-- LEFT LIST -->
-        <div class="project-list" id="interactive">
-            <div class="project-item" onclick="openProject('scratch')">Scratch Game (2024)</div>
-            <div class="project-item" onclick="openProject('yt')">YouTube Gameplay (2024)</div>
-        </div>
-
-        <div class="project-list hidden" id="static">
-            <div class="project-item">Static Images (2023)</div>
-        </div>
-
-        <!-- RIGHT EMBED -->
-        <div class="embed-container" id="project-container">
-            Select a project
-        </div>
-
-    </div>
+<!-- FILTER -->
+<div class="filter-bar">
+    <label for="filter">Sort by:</label>
+    <select id="filter" onchange="applyFilter()">
+        <option value="newest">Newest → Oldest</option>
+        <option value="oldest">Oldest → Newest</option>
+    </select>
 </div>
 
+<!-- MAIN LAYOUT -->
+<div class="works-layout">
+
+    <!-- LEFT: PROJECT LIST -->
+    <div id="project-list" class="project-list">
+
+        <div class="project-item" data-date="2025-01-12" onclick="openProject('p5')">
+            <img src="img/p5thumb.jpg" class="thumb">
+            <div class="info">
+                <strong>P5.js Sketch</strong>
+                <span class="date">2025</span>
+            </div>
+        </div>
+
+        <div class="project-item" data-date="2024-11-02" onclick="openProject('quieterrs')">
+            <img src="img/quieterrs-thumb.jpg" class="thumb">
+            <div class="info">
+                <strong>Quiet Errs</strong>
+                <span class="date">2024</span>
+            </div>
+        </div>
+
+        <div class="project-item" data-date="2024-05-19" onclick="openProject('itch')">
+            <img src="img/itchthumb.jpg" class="thumb">
+            <div class="info">
+                <strong>Itch.io Game</strong>
+                <span class="date">2024</span>
+            </div>
+        </div>
+
+        <div class="project-item" data-date="2023-08-01" onclick="openProject('site')">
+            <img src="img/sitethumb.jpg" class="thumb">
+            <div class="info">
+                <strong>Website Project</strong>
+                <span class="date">2023</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RIGHT: EMBED DISPLAY -->
+    <div id="project-container">
+        <p>Select a project.</p>
+    </div>
+
+</div>
+
+<a href="index.html">← Back to Scene</a>
+
 <script>
-function switchTab(id, btn) {
-    document.querySelectorAll('.project-list').forEach(l => l.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
+// ---------- LOAD PROJECT ----------
+function openProject(id) {
+    const container = document.getElementById("project-container");
 
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
+    if (id === "quieterrs") {
+        container.innerHTML = `
+            <div class="embed-container">
+                <iframe 
+                    src="https://scratch.mit.edu/projects/1101838389/embed"
+                    allowtransparency="true"
+                    scrolling="no"
+                    allowfullscreen>
+                </iframe>
+            </div>
 
-    document.getElementById('project-container').innerHTML = 'Select a project';
-}
-
-function openProject(type) {
-    const c = document.getElementById('project-container');
-
-    if (type === 'scratch') {
-        c.innerHTML = `
-        <iframe
-            src="https://scratch.mit.edu/projects/1101838389/embed"
-            allowtransparency="true"
-            frameborder="0"
-            scrolling="no"
-            allowfullscreen>
-        </iframe>`;
+            <div class="embed-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/ogaDnvd_2Ug"
+                    title="Quiet Errs Gameplay"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        `;
+        return;
     }
 
-    if (type === 'yt') {
-        c.innerHTML = `
-        <iframe
-            src="https://www.youtube.com/embed/ogaDnvd_2Ug"
-            frameborder="0"
-            allowfullscreen>
-        </iframe>`;
-    }
+    const embeds = {
+        p5: `
+            <div class="embed-container">
+                <iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe>
+            </div>
+        `,
+        itch: `
+            <div class="embed-container">
+                <iframe src="https://itch.io/embed-upload/123456"></iframe>
+            </div>
+        `,
+        site: `
+            <div class="embed-container">
+                <iframe src="https://example.com"></iframe>
+            </div>
+        `
+    };
+
+    container.innerHTML = embeds[id] || "<p>Project not found.</p>";
 }
+
+// ---------- SORT PROJECTS ----------
+function applyFilter() {
+    const list = document.getElementById("project-list");
+    const items = Array.from(list.getElementsByClassName("project-item"));
+    const order = document.getElementById("filter").value;
+
+    items.sort((a, b) => {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+        return order === "newest" ? dateB - dateA : dateA - dateB;
+    });
+
+    items.forEach(item => list.appendChild(item));
+}
+
+applyFilter();
 </script>
 
 </body>
