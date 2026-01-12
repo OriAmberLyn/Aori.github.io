@@ -34,6 +34,7 @@
 
             <!-- PROJECT LIST -->
             <div id="project-list" class="project-list">
+
                 <div class="project-item" data-date="2025-12-02" onclick="openProject('p5')">
                     <img src="img/p5thumb.jpg" class="thumb">
                     <div class="info">
@@ -65,6 +66,7 @@
                         <span class="date">2025</span>
                     </div>
                 </div>
+
             </div>
 
             <!-- EMBED DISPLAY -->
@@ -75,41 +77,40 @@
         </div>
     </div>
 
-   <!-- STATIC TAB -->
-<div id="static" class="tab-content">
-    <div class="static-gallery">
+    <!-- STATIC TAB -->
+    <div id="static" class="tab-content">
+        <div class="static-gallery">
 
-        <div class="gallery-item">
-            <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/Ori%20Sheet.png" alt="Ori Sheet">
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/Ori%20Sheet.png">
+            </div>
+
+            <div class="gallery-item">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/Screen%20Recording%202025-02-25%20012948.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/head.png">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/ragoon.png">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/redraw%20ig.png">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/rue%20pop.gif">
+            </div>
+
         </div>
-
-        <div class="gallery-item">
-            <video autoplay muted loop playsinline>
-                <source src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/Screen%20Recording%202025-02-25%20012948.mp4" type="video/mp4">
-            </video>
-        </div>
-
-        <div class="gallery-item">
-            <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/head.png" alt="Head">
-        </div>
-
-        <div class="gallery-item">
-            <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/ragoon.png" alt="Ragoon">
-        </div>
-
-        <div class="gallery-item">
-            <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/redraw%20ig.png" alt="Redraw IG">
-        </div>
-
-        <div class="gallery-item">
-            <img src="https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/main/Gallery/rue%20pop.gif" alt="Rue Pop">
-        </div>
-
     </div>
-</div>
-    
-<a href="index.html" class="back-btn">← Back</a>
 
+    <a href="index.html" class="back-btn">← Back</a>
 
 </div>
 
@@ -117,6 +118,7 @@
 function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
+
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelector(`.tab-btn[onclick="switchTab('${tabId}')"]`).classList.add('active');
 }
@@ -127,35 +129,70 @@ function openProject(id) {
     if (id === "quieterrs") {
         container.innerHTML = `
             <div class="embed-container">
-                <iframe src="https://scratch.mit.edu/projects/1101838389/embed" allowtransparency="true" scrolling="no" allowfullscreen></iframe>
+                <iframe src="https://scratch.mit.edu/projects/1101838389/embed"
+                        allowtransparency="true"
+                        scrolling="no"
+                        allowfullscreen></iframe>
             </div>
+
             <div class="embed-container">
-                <iframe src="https://www.youtube.com/embed/ogaDnvd_2Ug" title="Quiet Errs Gameplay" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/ogaDnvd_2Ug"
+                        title="Quiet Errs Gameplay"
+                        allowfullscreen></iframe>
             </div>
         `;
         return;
     }
 
     const embeds = {
-        p5: `<div class="embed-container"><iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe></div>`,
+        p5: `
+            <div class="embed-container">
+                <iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe>
+            </div>
+        `,
 
-        // Updated Itch.io embed
-        itch: `<div class="embed-container">
-                   <iframe src="https://itch.io/embed-upload/13057329?color=2f2f59" frameborder="0" allowfullscreen></iframe>
-               </div>`,
+        itch: `
+            <div class="embed-container">
+                <iframe src="https://itch.io/embed-upload/13057329?color=2f2f59"
+                        frameborder="0"
+                        allowfullscreen></iframe>
+            </div>
+        `,
 
-        site: `<div class="embed-container"><iframe src="https://example.com"></iframe></div>`
+        site: `
+            <div class="embed-container itch-card">
+                <iframe src="https://itch.io/embed/4192881" frameborder="0">
+                    <a href="https://galaxy-m.itch.io/millet-greed">
+                        Millet Greed by Aori
+                    </a>
+                </iframe>
+            </div>
+
+            <div class="embed-container">
+                <iframe src="https://www.youtube.com/embed/W14LQ31KKyU"
+                        title="Millet Greed Gameplay"
+                        allowfullscreen></iframe>
+            </div>
+        `
     };
 
     container.innerHTML = embeds[id] || "<p>Project not found.</p>";
 }
+
 function applyFilter() {
     const list = document.getElementById("project-list");
     const items = Array.from(list.getElementsByClassName("project-item"));
     const order = document.getElementById("filter").value;
-    items.sort((a,b)=> order==="newest"? new Date(b.dataset.date)-new Date(a.dataset.date): new Date(a.dataset.date)-new Date(b.dataset.date));
-    items.forEach(item=> list.appendChild(item));
+
+    items.sort((a, b) =>
+        order === "newest"
+            ? new Date(b.dataset.date) - new Date(a.dataset.date)
+            : new Date(a.dataset.date) - new Date(b.dataset.date)
+    );
+
+    items.forEach(item => list.appendChild(item));
 }
+
 applyFilter();
 </script>
 
