@@ -66,7 +66,13 @@
                         <span class="date">2025</span>
                     </div>
                 </div>
-
+                <div class="project-item" data-date="2026-05-14" onclick="openProject('oreo')">
+                   <img src="img/oreothumb.jpg" class="thumb"> <!-- Make sure this image exists! -->
+                    <div class="info">
+                        <strong>Oreo, The Greediest</strong>
+                        <span class="date">2026</span>
+                    </div>
+                </div>
             </div>
 
             <!-- EMBED DISPLAY -->
@@ -145,6 +151,16 @@ function openProject(id) {
     }
 
     const embeds = {
+        // Your new Oreo project
+        oreo: `
+            <div class="embed-container">
+                <iframe frameborder="0" src="https://itch.io/embed-upload/17544993?color=f0eb8a" 
+                        allowfullscreen="" width="1120" height="650">
+                    <a href="https://galaxy-m.itch.io/oreo-the-greediest">Play Oreo, The Greediest on itch.io</a>
+                </iframe>
+            </div>
+        `,
+
         p5: `
             <div class="embed-container">
                 <iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe>
@@ -161,7 +177,7 @@ function openProject(id) {
 
         site: `
             <div class="embed-container itch-card">
- <iframe src="https://itch.io/embed-upload/16117921?color=333333"
+                <iframe src="https://itch.io/embed-upload/16117921?color=333333"
                         frameborder="0"
                         allowfullscreen>
                 </iframe>
