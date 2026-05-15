@@ -151,46 +151,46 @@ function openProject(id) {
         return;
     }
 
-    const embeds = {
-        // Your new Oreo project
-        oreo: `
-            <div class="embed-container">
-                <iframe frameborder="0" src="https://itch.io/embed-upload/17544993?color=f0eb8a" 
-                        allowfullscreen="" width="1120" height="650">
-                    <a href="https://galaxy-m.itch.io/oreo-the-greediest">Play Oreo, The Greediest on itch.io</a>
-                </iframe>
-            </div>
-        `,
+const embeds = {
+    // This is the updated "ooo" version
+    oreo: `
+        <div class="embed-container">
+            <iframe frameborder="0" src="https://itch.io/embed-upload/17545941?color=333333" 
+                    allowfullscreen="" width="640" height="380">
+                <a href="https://galaxy-m.itch.io/ooo">Play ooo on itch.io</a>
+            </iframe>
+        </div>
+    `,
 
-        p5: `
-            <div class="embed-container">
-                <iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe>
-            </div>
-        `,
+    p5: `
+        <div class="embed-container">
+            <iframe src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"></iframe>
+        </div>
+    `,
 
-        itch: `
-            <div class="embed-container">
-                <iframe src="https://itch.io/embed-upload/13057329?color=2f2f59"
-                        frameborder="0"
-                        allowfullscreen></iframe>
-            </div>
-        `,
+    itch: `
+        <div class="embed-container">
+            <iframe src="https://itch.io/embed-upload/13057329?color=2f2f59"
+                    frameborder="0"
+                    allowfullscreen></iframe>
+        </div>
+    `,
 
-        site: `
-            <div class="embed-container itch-card">
-                <iframe src="https://itch.io/embed-upload/16117921?color=333333"
-                        frameborder="0"
-                        allowfullscreen>
-                </iframe>
-            </div>
+    site: `
+        <div class="embed-container itch-card">
+            <iframe src="https://itch.io/embed-upload/16117921?color=333333"
+                    frameborder="0"
+                    allowfullscreen>
+            </iframe>
+        </div>
 
-            <div class="embed-container">
-                <iframe src="https://www.youtube.com/embed/W14LQ31KKyU"
-                        title="Millet Greed Gameplay"
-                        allowfullscreen></iframe>
-            </div>
-        `
-    };
+        <div class="embed-container">
+            <iframe src="https://www.youtube.com/embed/W14LQ31KKyU"
+                    title="Millet Greed Gameplay"
+                    allowfullscreen></iframe>
+        </div>
+    `
+};
 
     container.innerHTML = embeds[id] || "<p>Project not found.</p>";
 }
