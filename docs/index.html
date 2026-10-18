@@ -1,128 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Main Screen</title>
-   <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Main Screen</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body style="background-color:coral;">
+<body style="background-color: coral;">
 
   <main class="cards">
-  <a href="about.html" class="card card--about" id="card1">
-    <h1>About</h1>
-    <h2>Contact</h2>
-  </a>
+    <a href="about.html" class="card card--about" id="card1">
+      <h1>About</h1>
+      <h2>Contact</h2>
+    </a>
 
-  <a href="interactive.html" class="card card--interactive" id="card2">
-    <h1>Interactive</h1>
-    <h2>Works</h2>
-  </a>
+    <a href="interactive.html" class="card card--interactive" id="card2">
+      <h1>Interactive</h1>
+      <h2>Works</h2>
+    </a>
 
-  <a href="static.html" class="card card--static" id="card3">
-    <h1>Static</h1>
-    <h2>Works</h2>
-  </a>
-</main>
+    <a href="static.html" class="card card--static" id="card3">
+      <h1>Static</h1>
+      <h2>Works</h2>
+    </a>
+  </main>
 
-<div class="screen-frame" aria-hidden="true"></div>
+  <div class="screen-frame" aria-hidden="true"></div>
+
+  <script>
+    const tiltEffectSettings = {
+      max: 25,
+      scale: 1.1,
+      speed: 500,
+      easing: "cubic-bezier(.03,.98,.52,.99)"
+    };
+
+    const cards = document.querySelectorAll(".card");
+    const frame = document.querySelector(".screen-frame");
+
+    cards.forEach(card => {
+      card.addEventListener("mouseenter", cardMouseEnter);
+      card.addEventListener("mousemove", cardMouseMove);
+      card.addEventListener("mouseleave", cardMouseLeave);
+    });
+
+    function cardMouseEnter(event) {
+      setTransition(event.currentTarget);
+    }
+
+    function cardMouseMove(event) {
+      const card = event.currentTarget;
+      const bounds = card.getBoundingClientRect();
+
+      const mouseX = event.clientX - (bounds.left + bounds.width / 2);
+      const mouseY = event.clientY - (bounds.top + bounds.height / 2);
+
+      const rotateX = Math.max(
+        -tiltEffectSettings.max,
+        Math.min(
+          tiltEffectSettings.max,
+          (-mouseY / (bounds.height / 2)) * tiltEffectSettings.max
+        )
+      );
+
+      const rotateY = Math.max(
+        -tiltEffectSettings.max,
+        Math.min(
+          tiltEffectSettings.max,
+          (mouseX / (bounds.width / 2)) * tiltEffectSettings.max
+        )
+      );
+
+      card.style.setProperty("--rotate-x", `${rotateX}deg`);
+      card.style.setProperty("--rotate-y", `${rotateY}deg`);
+      card.style.setProperty("--card-scale", tiltEffectSettings.scale);
+    }
+
+    function cardMouseLeave(event) {
+      const card = event.currentTarget;
+
+      card.style.setProperty("--rotate-x", "0deg");
+      card.style.setProperty("--rotate-y", "0deg");
+      card.style.setProperty("--card-scale", "1");
+
+      setTransition(card);
+    }
+
+    function setTransition(card) {
+      clearTimeout(card.transitionTimeoutId);
+      card.style.transition =
+        `transform ${tiltEffectSettings.speed}ms ${tiltEffectSettings.easing}`;
+
+      card.transitionTimeoutId = setTimeout(() => {
+        card.style.transition = "";
+      }, tiltEffectSettings.speed);
+    }
+
+    document.addEventListener("mousemove", event => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 2;
+      const y = (event.clientY / window.innerHeight - 0.5) * 2;
+
+      cards.forEach(card => {
+        card.style.setProperty("--parallax-x", `${x * 8}px`);
+        card.style.setProperty("--parallax-y", `${y * 8}px`);
+      });
+
+      if (frame) {
+        frame.style.setProperty("--frame-x", `${x * 24}px`);
+        frame.style.setProperty("--frame-y", `${y * 24}px`);
+      }
+    });
+
+    document.addEventListener("mouseleave", () => {
+      cards.forEach(card => {
+        card.style.setProperty("--parallax-x", "0px");
+        card.style.setProperty("--parallax-y", "0px");
+      });
+
+      if (frame) {
+        frame.style.setProperty("--frame-x", "0px");
+        frame.style.setProperty("--frame-y", "0px");
+      }
+    });
+  </script>
 </body>
-    <script>const tiltEffectSettings = {
-  max: 25,
-  perspective: 1000,
-  scale: 1.1,
-  speed: 500,
-  easing: "cubic-bezier(.03,.98,.52,.99)"
-};
-
-const cards = document.querySelectorAll(".card");
-const frame = document.querySelector(".screen-frame");
-
-cards.forEach(card => {
-  card.addEventListener("mouseenter", cardMouseEnter);
-  card.addEventListener("mousemove", cardMouseMove);
-  card.addEventListener("mouseleave", cardMouseLeave);
-});
-
-function cardMouseEnter(event) {
-  setTransition(event);
-}
-
-function cardMouseMove(event) {
-  const card = event.currentTarget;
-  const bounds = card.getBoundingClientRect();
-
-  const mouseX = event.clientX - (bounds.left + bounds.width / 2);
-  const mouseY = event.clientY - (bounds.top + bounds.height / 2);
-
-  const rotateX = Math.max(
-    -tiltEffectSettings.max,
-    Math.min(
-      tiltEffectSettings.max,
-      -mouseY / (bounds.height / 2) * tiltEffectSettings.max
-    )
-  );
-
-  const rotateY = Math.max(
-    -tiltEffectSettings.max,
-    Math.min(
-      tiltEffectSettings.max,
-      mouseX / (bounds.width / 2) * tiltEffectSettings.max
-    )
-  );
-
-  // Set tilt variables; CSS combines these with the card's parallax movement.
-  card.style.setProperty("--rotate-x", `${rotateX}deg`);
-  card.style.setProperty("--rotate-y", `${rotateY}deg`);
-  card.style.setProperty("--card-scale", tiltEffectSettings.scale);
-}
-
-function cardMouseLeave(event) {
-  const card = event.currentTarget;
-
-  card.style.setProperty("--rotate-x", "0deg");
-  card.style.setProperty("--rotate-y", "0deg");
-  card.style.setProperty("--card-scale", "1");
-
-  setTransition(event);
-}
-
-function setTransition(event) {
-  const card = event.currentTarget;
-
-  clearTimeout(card.transitionTimeoutId);
-  card.style.transition =
-    `transform ${tiltEffectSettings.speed}ms ${tiltEffectSettings.easing}`;
-
-  card.transitionTimeoutId = setTimeout(() => {
-    card.style.transition = "";
-  }, tiltEffectSettings.speed);
-}
-
-/* Parallax: all cards move moderately; the frame moves more. */
-document.addEventListener("mousemove", event => {
-  const x = (event.clientX / window.innerWidth - 0.5) * 2;
-  const y = (event.clientY / window.innerHeight - 0.5) * 2;
-
-  cards.forEach(card => {
-    card.style.setProperty("--parallax-x", `${x * 8}px`);
-    card.style.setProperty("--parallax-y", `${y * 8}px`);
-  });
-
-  if (frame) {
-    frame.style.setProperty("--frame-x", `${x * 24}px`);
-    frame.style.setProperty("--frame-y", `${y * 24}px`);
-  }
-});
-
-document.addEventListener("mouseleave", () => {
-  cards.forEach(card => {
-    card.style.setProperty("--parallax-x", "0px");
-    card.style.setProperty("--parallax-y", "0px");
-  });
-
-  if (frame) {
-    frame.style.setProperty("--frame-x", "0px");
-    frame.style.setProperty("--frame-y", "0px");
-  }
-});</script>
 </html>
