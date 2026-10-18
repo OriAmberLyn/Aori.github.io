@@ -2,25 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>About</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About & Contact</title>
     <link rel="stylesheet" href="css/about.css">
 </head>
 <body>
+    <div class="page-wrapper">
+        <h1>About Me</h1>
 
-<div class="page-wrapper">
-
-    <h1>About Me</h1>
-
-    <div class="about-content">
-        <p>Melody, also known online as Aori (Aoriki), is an emerging digital artist developing a practice in interactive media and game creation.</p>
+        <div class="about-content">
+            <p>Melody, also known online as Aori (Aoriki), is an emerging digital artist developing a practice in interactive media and game creation.</p>
             <p>Their work focuses on digital illustration, visual experimentation, and the early stages of game design, with an interest in atmosphere and narrative.</p>
             <p>Over the coming year, they aim to strengthen their technical skills in game development and create more cohesive interactive projects that merge digital art with engaging gameplay.</p>
+        </div>
+
+        <section class="contact-section">
+            <h2>Contact</h2>
+
+            <div class="contact-container">
+                <a href="https://www.instagram.com/galaxy_m._/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="contact-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
+                         alt="">
+                    <span>Instagram</span>
+                </a>
+
+                <div class="contact-icon" onclick="toggleEmail()">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/gmail.svg"
+                         alt="">
+                    <span>Email Me</span>
+
+                    <div id="email-content" class="hidden">
+                        <p id="email-text">aoriki.contact@gmail.com</p>
+                        <button type="button" onclick="copyEmail(event)">Copy Email</button>
+                        <button type="button" onclick="openEmail(event)">Send Email</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-btn">← Back</a>
     </div>
 
-    <!-- Fixed Back Button -->
-    <a href="index.html" class="back-btn">← Back</a>
+    <script>
+        function toggleEmail() {
+            document.getElementById("email-content").classList.toggle("hidden");
+        }
 
-</div>
+        function copyEmail(event) {
+            event.stopPropagation();
+            const email = document.getElementById("email-text").innerText;
+            navigator.clipboard.writeText(email).then(() => {
+                alert("Email copied: " + email);
+            });
+        }
 
+        function openEmail(event) {
+            event.stopPropagation();
+            const email = document.getElementById("email-text").innerText;
+            window.location.href = `mailto:${email}`;
+        }
+    </script>
 </body>
 </html>
