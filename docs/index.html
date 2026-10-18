@@ -2,156 +2,127 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Interactive Office Scene</title>
+    <title>Main Screen</title>
    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-<canvas id="renderCanvas"></canvas>
-<div id="tooltip"></div>
+<body style="background-color:coral;">
 
-<script src="https://cdn.babylonjs.com/babylon.js"></script>
-<script src="https://cdn.babylonjs.com/loaders/babylon.glTF2FileLoader.js"></script>
-<script>
-    const canvas = document.getElementById("renderCanvas");
-    const tooltip = document.getElementById("tooltip");
-    const engine = new BABYLON.Engine(canvas, true);
+  <main class="cards">
+  <a href="about.html" class="card card--about" id="card1">
+    <h1>About</h1>
+    <h2>Contact</h2>
+  </a>
 
-    const createScene = async () => {
-        const scene = new BABYLON.Scene(engine);
+  <a href="interactive.html" class="card card--interactive" id="card2">
+    <h1>Interactive</h1>
+    <h2>Works</h2>
+  </a>
 
-        // Camera setup
-        const camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 80, 0), scene);
-        camera.rotation = new BABYLON.Vector3(
-            0.4026,
-            -2.5294 + Math.PI/1.6,
-            0
-        );
-        camera.speed = 500;
-        camera.inertia = 0;
-        camera.angularSensibility = 500;
-        camera.attachControl(canvas, true);
+  <a href="static.html" class="card card--static" id="card3">
+    <h1>Static</h1>
+    <h2>Works</h2>
+  </a>
+</main>
 
-        // Light
-        const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0,1,0), scene);
-        light.intensity = 0.9;
-
-        // Load GLB
-        const result = await BABYLON.SceneLoader.ImportMeshAsync(
-            "", 
-            "https://raw.githubusercontent.com/OriAmberLyn/SiteAssets/edd67b281627d2115426c975dc07ccdf4532893c/", 
-            "desk_asset%20(1).glb", 
-            scene
-        );
-
-        // Remove Can_Momster object
-        const canMomster = scene.getMeshByName("Can_Momster_M_Can_Momster_0");
-        if (canMomster) canMomster.dispose();
-
-        // Remove material from Monitor_Wide
-        const monitorWide = scene.getMeshByName("Monitor_Wide_M_Monitor_Wide_Screen_0");
-        if (monitorWide) monitorWide.material = null;
-
-        // Scale all meshes
-        result.meshes.forEach(mesh => mesh.scaling = new BABYLON.Vector3(1,1,1));
-
-        // Clickable meshes with readable page labels
-const clickableMeshes = {
-    "Monitor_Wide_M_Monitor_Wide_Screen_0": { url: "about.html", label: "About Page" },
-    "Keyboard_M_Keyboard_0": { url: "contact.html", label: "Contact Page" },
-    "1_M_HUION_KAMVAS_GT_221_PRO_0": { url: "works.html", label: "Works Page" }
+<div class="screen-frame" aria-hidden="true"></div>
+</body>
+    <script>const tiltEffectSettings = {
+  max: 25,
+  perspective: 1000,
+  scale: 1.1,
+  speed: 500,
+  easing: "cubic-bezier(.03,.98,.52,.99)"
 };
 
-// Hover and click interactions
-result.meshes.forEach(mesh => {
-    const meshInfo = clickableMeshes[mesh.name];
-    if(meshInfo) {
-        mesh.actionManager = new BABYLON.ActionManager(scene);
+const cards = document.querySelectorAll(".card");
+const frame = document.querySelector(".screen-frame");
 
-        // Store original material (or create a temporary one if null)
-        const originalMaterial = mesh.material;
-        if(!mesh.material) {
-            mesh.material = new BABYLON.StandardMaterial("tempMat", scene);
-            mesh.material.diffuseColor = new BABYLON.Color3(1,1,1);
-        }
-
-        // Highlight on hover + tooltip
-        mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnPointerOverTrigger,
-                function() {
-                    if(mesh.material) mesh.material.diffuseColor = new BABYLON.Color3(1,1,1);
-                    tooltip.style.display = "block";
-                    tooltip.textContent = meshInfo.label;
-                }
-            )
-        );
-
-        mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnPointerOutTrigger,
-                function() {
-                    if(mesh.material && originalMaterial)
-                        mesh.material.diffuseColor = originalMaterial.diffuseColor.clone();
-                    tooltip.style.display = "none";
-                }
-            )
-        );
-
-        // Click: zoom then navigate
-        mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnPickTrigger,
-                function() {
-                    const distance = 10;
-                    const meshPos = mesh.getBoundingInfo().boundingBox.centerWorld;
-
-                    const direction = camera.position.subtract(meshPos).normalize();
-                    const targetPosition = meshPos.add(direction.scale(distance));
-
-                    BABYLON.Animation.CreateAndStartAnimation(
-                        "cameraZoom",
-                        camera,
-                        "position",
-                        60, 60,
-                        camera.position.clone(),
-                        targetPosition,
-                        BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
-                    );
-
-                    BABYLON.Animation.CreateAndStartAnimation(
-                        "cameraTarget",
-                        camera,
-                        "target",
-                        60, 60,
-                        camera.getTarget().clone(),
-                        meshPos,
-                        BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
-                    );
-
-                    setTimeout(() => {
-                        window.location.href = meshInfo.url;
-                    }, 700);
-                }
-            )
-        );
-    }
+cards.forEach(card => {
+  card.addEventListener("mouseenter", cardMouseEnter);
+  card.addEventListener("mousemove", cardMouseMove);
+  card.addEventListener("mouseleave", cardMouseLeave);
 });
 
+function cardMouseEnter(event) {
+  setTransition(event);
+}
 
-      // Tooltip follows mouse
-        scene.onPointerMove = function(evt) {
-            tooltip.style.left = evt.clientX + 10 + "px";
-            tooltip.style.top = evt.clientY + 10 + "px";
-        };
+function cardMouseMove(event) {
+  const card = event.currentTarget;
+  const bounds = card.getBoundingClientRect();
 
-        return scene;
-    };
+  const mouseX = event.clientX - (bounds.left + bounds.width / 2);
+  const mouseY = event.clientY - (bounds.top + bounds.height / 2);
 
-    createScene().then(scene => {
-        engine.runRenderLoop(() => scene.render());
-    });
+  const rotateX = Math.max(
+    -tiltEffectSettings.max,
+    Math.min(
+      tiltEffectSettings.max,
+      -mouseY / (bounds.height / 2) * tiltEffectSettings.max
+    )
+  );
 
-    window.addEventListener("resize", () => engine.resize());
-</script>
-</body>
+  const rotateY = Math.max(
+    -tiltEffectSettings.max,
+    Math.min(
+      tiltEffectSettings.max,
+      mouseX / (bounds.width / 2) * tiltEffectSettings.max
+    )
+  );
+
+  // Set tilt variables; CSS combines these with the card's parallax movement.
+  card.style.setProperty("--rotate-x", `${rotateX}deg`);
+  card.style.setProperty("--rotate-y", `${rotateY}deg`);
+  card.style.setProperty("--card-scale", tiltEffectSettings.scale);
+}
+
+function cardMouseLeave(event) {
+  const card = event.currentTarget;
+
+  card.style.setProperty("--rotate-x", "0deg");
+  card.style.setProperty("--rotate-y", "0deg");
+  card.style.setProperty("--card-scale", "1");
+
+  setTransition(event);
+}
+
+function setTransition(event) {
+  const card = event.currentTarget;
+
+  clearTimeout(card.transitionTimeoutId);
+  card.style.transition =
+    `transform ${tiltEffectSettings.speed}ms ${tiltEffectSettings.easing}`;
+
+  card.transitionTimeoutId = setTimeout(() => {
+    card.style.transition = "";
+  }, tiltEffectSettings.speed);
+}
+
+/* Parallax: all cards move moderately; the frame moves more. */
+document.addEventListener("mousemove", event => {
+  const x = (event.clientX / window.innerWidth - 0.5) * 2;
+  const y = (event.clientY / window.innerHeight - 0.5) * 2;
+
+  cards.forEach(card => {
+    card.style.setProperty("--parallax-x", `${x * 8}px`);
+    card.style.setProperty("--parallax-y", `${y * 8}px`);
+  });
+
+  if (frame) {
+    frame.style.setProperty("--frame-x", `${x * 24}px`);
+    frame.style.setProperty("--frame-y", `${y * 24}px`);
+  }
+});
+
+document.addEventListener("mouseleave", () => {
+  cards.forEach(card => {
+    card.style.setProperty("--parallax-x", "0px");
+    card.style.setProperty("--parallax-y", "0px");
+  });
+
+  if (frame) {
+    frame.style.setProperty("--frame-x", "0px");
+    frame.style.setProperty("--frame-y", "0px");
+  }
+});</script>
 </html>
