@@ -1,4 +1,4 @@
-  * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -34,16 +34,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 12px;
 
   color: white;
   text-decoration: none;
-  cursor: pointer;
-  gap: 12px;
-  font-size: clamp(1rem, 2vw, 1.5rem);
   text-align: center;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  cursor: pointer;
+
   transform-style: preserve-3d;
   will-change: transform;
-
   transform:
     translate(var(--parallax-x, 0px), var(--parallax-y, 0px))
     perspective(1000px)
@@ -54,7 +54,7 @@ body {
 
 .card h1,
 .card h2 {
-  color: #ffffff;
+  color: #fff;
   -webkit-text-stroke: 2px #241643;
   transform: translateZ(65px);
 }
@@ -70,7 +70,6 @@ body {
   border-radius: 30px 30px 10px 10px;
   background-image: url("https://github.com/OriAmberLyn/SiteAssets/blob/main/tets/middle.png?raw=true");
   background-size: cover;
-  /*background-position: left;*/
 }
 
 #card3 {
@@ -79,7 +78,7 @@ body {
   border-radius: 15px 50px 50px 5px;
 }
 
-/* Adaptive foreground frame */
+/* Decorative foreground frame */
 .screen-frame {
   position: fixed;
   inset: calc(-2 * clamp(12px, 2vw, 28px));
@@ -97,9 +96,9 @@ body {
   }
 
   .card {
+    width: 100%;
     height: clamp(160px, 30vh, 280px);
-
-  
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
