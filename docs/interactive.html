@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="coi-serviceworker.js"></script>
+    <title>Interactive Works</title>
+    <link rel="stylesheet" href="css/interactive.css">
+    <script src="js/interactive.js" defer></script>
+</head>
+<body>
+    <main class="page-wrapper">
+        <h1>Interactive Works</h1>
+
+        <div class="filter-bar">
+            <label for="filter">Sort by:</label>
+            <select id="filter">
+                <option value="newest">Newest → Oldest</option>
+                <option value="oldest">Oldest → Newest</option>
+            </select>
+        </div>
+
+        <div class="works-layout">
+            <div id="project-list" class="project-list">
+                <button class="project-item" data-date="2025-12-02" data-project="p5">
+                    <img src="img/p5thumb.jpg" class="thumb" alt="">
+                    <span class="info">
+                        <strong>P5.js Sketch</strong>
+                        <span class="date">2025</span>
+                    </span>
+                </button>
+
+                <button class="project-item" data-date="2024-11-02" data-project="quieterrs">
+                    <img src="img/quieterrs-thumb.jpg" class="thumb" alt="">
+                    <span class="info">
+                        <strong>Quiet Errs (Scratch)</strong>
+                        <span class="date">2024</span>
+                    </span>
+                </button>
+
+                <button class="project-item" data-date="2025-02-19" data-project="itch">
+                    <img src="img/itchthumb.jpg" class="thumb" alt="">
+                    <span class="info">
+                        <strong>LOST (Bitsy)</strong>
+                        <span class="date">2025</span>
+                    </span>
+                </button>
+
+                <button class="project-item" data-date="2025-12-15" data-project="site">
+                    <img src="img/sitethumb.jpg" class="thumb" alt="">
+                    <span class="info">
+                        <strong>Millet Greed (Unity)</strong>
+                        <span class="date">2025</span>
+                    </span>
+                </button>
+
+                <button class="project-item" data-date="2026-05-14" data-project="oreo">
+                    <img src="img/oreothumb.jpg" class="thumb" alt="">
+                    <span class="info">
+                        <strong>Oreo, The Greediest</strong>
+                        <span class="date">2026</span>
+                    </span>
+                </button>
+            </div>
+
+            <section id="project-container" aria-live="polite">
+                <p>Select a project.</p>
+            </section>
+        </div>
+
+        <a href="index.html" class="back-btn">← Back</a>
+    </main>
+</body>
+
+<script>const projectEmbeds = {
+    quieterrs: `
+        <div class="embed-container">
+            <iframe
+                src="https://scratch.mit.edu/projects/1101838389/embed"
+                title="Quiet Errs on Scratch"
+                allowtransparency="true"
+                scrolling="no"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <div class="embed-container">
+            <iframe
+                src="https://www.youtube.com/embed/ogaDnvd_2Ug"
+                title="Quiet Errs Gameplay"
+                allowfullscreen>
+            </iframe>
+        </div>
+    `,
+
+    oreo: `
+        <div class="embed-container">
+            <iframe
+                src="https://itch.io/embed-upload/17581868?color=f0eb8a"
+                title="Oreo, The Greediest"
+                allowfullscreen>
+            </iframe>
+        </div>
+    `,
+
+    p5: `
+        <div class="embed-container">
+            <iframe
+                src="https://editor.p5js.org/Aoriki/full/NQvpKe2Sn"
+                title="P5.js Sketch"
+                allowfullscreen>
+            </iframe>
+        </div>
+    `,
+
+    itch: `
+        <div class="embed-container">
+            <iframe
+                src="https://itch.io/embed-upload/13057329?color=2f2f59"
+                title="LOST (Bitsy)"
+                allowfullscreen>
+            </iframe>
+        </div>
+    `,
+
+    site: `
+        <div class="embed-container">
+            <iframe
+                src="https://itch.io/embed-upload/16117921?color=333333"
+                title="Millet Greed"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <div class="embed-container">
+            <iframe
+                src="https://www.youtube.com/embed/W14LQ31KKyU"
+                title="Millet Greed Gameplay"
+                allowfullscreen>
+            </iframe>
+        </div>
+    `
+};
+
+const projectList = document.getElementById("project-list");
+const projectContainer = document.getElementById("project-container");
+const filter = document.getElementById("filter");
+
+projectList.addEventListener("click", (event) => {
+    const item = event.target.closest(".project-item");
+    if (!item) return;
+
+    projectList.querySelectorAll(".project-item").forEach((project) => {
+        project.classList.remove("selected");
+    });
+
+    item.classList.add("selected");
+    projectContainer.innerHTML =
+        projectEmbeds[item.dataset.project] || "<p>Project not found.</p>";
+});
+
+filter.addEventListener("change", applyFilter);
+
+function applyFilter() {
+    const items = Array.from(projectList.querySelectorAll(".project-item"));
+    const newestFirst = filter.value === "newest";
+
+    items.sort((a, b) => {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+        return newestFirst ? dateB - dateA : dateA - dateB;
+    });
+
+    items.forEach((item) => projectList.appendChild(item));
+}
+
+applyFilter();</script>
+    
+</html>
